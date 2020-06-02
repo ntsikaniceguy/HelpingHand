@@ -92,4 +92,8 @@ public class CreateAccount extends AppCompatActivity {
         startActivity(loginIntent);
     }
 
+    public void testPushMethod(View view){
+        System.out.println("this is just a test");
+    }
+
 }
