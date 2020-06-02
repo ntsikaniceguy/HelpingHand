@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">HelpingHand</string>
+    <string name="welcome_to_helping_hand">Welcome to Helping Hand</string>
+    <string name="create_account_button_main_activity">Create Account</string>
+    <string name="tell_us_about_yourself">Tell us about yourself.</string>
+    <string name="createAccountEmail">Email</string>
+    <string name="createAccountName">Name</string>
+    <string name="phoneCreateAccount">Phone</string>
+    <string name="are_you_in_need_of_assistance_or_lending_a_hand">Are you in need of assistance or lending a hand?</string>
+    <string name="assistanceCreateAccount">Assistance</string>
+    <string name="helpingCreateAccount">Helping</string>
+    <string name="already_have_an_account_login_here">Already have an account? Login here.</string>
+    <string name="Volunteer">Volunteer</string>
+    <string name="volunteerRadioButton">Volunteer</string>
+    <string name="assistanceRadioAssistance">Assistance</string>
+    <string name="create_account_button">Create Account</string>
+</resources>
