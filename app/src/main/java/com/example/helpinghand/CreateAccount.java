@@ -41,11 +41,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-
 public class CreateAccount extends AppCompatActivity {
-
-    private RadioGroup radioGroup;
-    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,31 +51,32 @@ public class CreateAccount extends AppCompatActivity {
 
     public void doCreateAccount (View view) {
 
+        final RadioGroup radioGroup;
+        final RadioButton radioButton;
+
         EditText nameText = findViewById(R.id.createAccountNameTextId);
-        String name = nameText.toString();
+        final String name = nameText.toString();
         nameText.setText("");
 
         EditText surnameText = findViewById(R.id.createAccountSurnameTextId);
-        String surname = surnameText.toString();
+        final String surname = surnameText.toString();
         surnameText.setText("");
 
         EditText emailText = findViewById(R.id.createAccountEmailTextId);
-        String email = emailText.toString();
+        final String email = emailText.toString();
         emailText.setText("");
 
         EditText phoneNumberText = findViewById(R.id.createAccountPhoneId);
-        String phoneNumber = phoneNumberText.toString();
+        final String phoneNumber = phoneNumberText.toString();
         phoneNumberText.setText("");
 
-       /*
-        EditText passwordText = findViewById(R.id.loginActivityPassword);
+    /*    EditText passwordText = findViewById(R.id.loginActivityPassword);
         String passwordStringLiteral = passwordText.toString();
         String securePassword = getSecurePassword(passwordStringLiteral, salt);
-       */
+*/
 
         radioGroup = findViewById(R.id.radioGroup);
         radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
-
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://lamp.ms.wits.ac.za/home/s2241186/signup.php").newBuilder();
 
         if(radioButton.getText() == "volunteer"){
@@ -112,33 +109,62 @@ public class CreateAccount extends AppCompatActivity {
             urlBuilder.addQueryParameter("contact", phoneNumber);
         }
 
+        /*   if(securePassword.isEmpty()){
+            passwordText.setError("Password is required!");
+        }else{
+            urlBuilder.addQueryParameter("password", securePassword);
+        }
+        */
 
         urlBuilder.addQueryParameter("address", null);
         urlBuilder.addQueryParameter("image", null);
         urlBuilder.addQueryParameter("password", null);
 
+         String queryurl = urlBuilder.build().toString();
+         Request request = new Request.Builder().url(queryurl).build();
+         OkHttpClient client = new OkHttpClient();
 
-        if(radioButton.getText() == "volunteer"){
-            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty()) //&& securePassword.isEmpty())
-            ) {
-                Toast.makeText(this, "Sign up successful!", Toast.LENGTH_SHORT).show();
-                Intent volunteerIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
-                startActivity(volunteerIntent);
-            }else{
-                Toast.makeText(this, "Incomplete sign up form!", Toast.LENGTH_SHORT).show();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
             }
 
-        }else{
-            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty()) //&& securePassword.isEmpty())
-            ) {
-                Toast.makeText(this, "Sign up successful!", Toast.LENGTH_SHORT).show();
-                Intent patientIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
-                startActivity(patientIntent);
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                 if(response.isSuccessful()) {
+                    final String result = response.body().toString();
+                    CreateAccount.this.runOnUiThread(new Runnable() {
+                    @Override
+                        public void run() {
+                            if( result.equals("NULL")) {
+                                Toast.makeText(CreateAccount.this, "Account already exists, please sign up!", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                if(radioButton.getText().equals("volunteer")){
+                                    if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty())){
+                                        Intent volunteerIntent = new Intent(CreateAccount.this, VolunteerHomePage.class);
+                                        startActivity(volunteerIntent);
+                                    }else{
+                                        Toast.makeText(CreateAccount.this, "Incomplete sign up form!", Toast.LENGTH_SHORT).show();
+                                    }
 
-            }else{
-                Toast.makeText(this, "Please complete sign up form!", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty())) {
+                                        Intent patientIntent = new Intent(CreateAccount.this, PatientHomePage.class);
+                                        startActivity(patientIntent);
+
+                                    }else{
+                                        Toast.makeText(CreateAccount.this, "Please complete sign up form!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                 }
             }
-        }
+        });
     }
 
     public void doLoginIntent(View view){
