@@ -11,8 +11,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -27,73 +30,121 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.example.helpinghand.SaltedMD5Example.*;
+
+
 public class CreateAccount extends AppCompatActivity {
 
-    public void processJSON(String json){
-        try {
-            JSONArray all = new JSONArray(json);
-            for (int i=0; i<all.length(); i++){
-                JSONObject item = all.getJSONObject(i);
-                String name = item.getString("BRAND");
-                String description = item.getString("NUMBER");
-                TextView text = new TextView(this);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
+    byte [] salt = getSalt();
 
-    public void doCreateAccount(View view){
-
-
-    }
+    public CreateAccount() throws NoSuchProviderException, NoSuchAlgorithmException {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+    }
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://lamp.ms.wits.ac.za/home/s2241186/signup.php")
-                .build();
+    public void doCreateAccount (View view) {
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
-                e.printStackTrace();
+        EditText nameText = findViewById(R.id.createAccountNameTextId);
+        String name = nameText.toString();
+
+        EditText surnameText = findViewById(R.id.createAccountSurnameTextId);
+        String surname = surnameText.toString();
+
+        EditText emailText = findViewById(R.id.createAccountEmailTextId);
+        String email = emailText.toString();
+
+        EditText phoneNumberText = findViewById(R.id.createAccountPhoneId);
+        String phoneNumber = phoneNumberText.toString();
+
+        EditText passwordText = findViewById(R.id.loginActivityPassword);
+        String passwordStringLiteral = passwordText.toString();
+        String securePassword = getSecurePassword(passwordStringLiteral, salt);
+
+
+        radioGroup = findViewById(R.id.radioGroup);
+        radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://lamp.ms.wits.ac.za/home/s2241186/signup.php").newBuilder();
+
+        if(radioButton.getText() == "volunteer"){
+            urlBuilder.addQueryParameter("type", "V");
+        } else{
+            urlBuilder.addQueryParameter("type", "P");
+        }
+
+        if(name.isEmpty()){
+            nameText.setError("First name required!");
+        }else{
+            urlBuilder.addQueryParameter("name", name);
+        }
+
+        if(surname.isEmpty()){
+            surnameText.setError("Surname is required!");
+        }else{
+            urlBuilder.addQueryParameter("surname", surname);
+        }
+
+        if(email.isEmpty()){
+            emailText.setError("Email is required!");
+        }else{
+            urlBuilder.addQueryParameter("email", email);
+        }
+
+        if(phoneNumber.isEmpty()){
+            phoneNumberText.setError("Phone number is required!");
+        }else{
+            urlBuilder.addQueryParameter("contact", phoneNumber);
+        }
+
+        if(securePassword.isEmpty()){
+            passwordText.setError("Password is required!");
+        }else{
+            urlBuilder.addQueryParameter("password", securePassword);
+        }
+
+        urlBuilder.addQueryParameter("address", null);
+        urlBuilder.addQueryParameter("image", null);
+
+
+        if(radioButton.getText() == "volunteer"){
+            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty() && securePassword.isEmpty())
+            ) {
+                Intent volunteerIntent = new Intent(CreateAccount.this, VolunteerHomePage.class);
+                startActivity(volunteerIntent);
+            }else{
+                Toast.makeText(this, "Incomplete sign up form!", Toast.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if(response.isSuccessful()){
-                    final String myResponse = response.body().string();
+        }else{
+            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty() && securePassword.isEmpty())
+            ) {
+                Intent patientIntent = new Intent(CreateAccount.this, PatientHomePage.class);
+                startActivity(patientIntent);
 
-                    CreateAccount.this.runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                        }
-                    });
-                }
+            }else{
+                Toast.makeText(this, "Please complete sign up form!", Toast.LENGTH_SHORT).show();
             }
-        });
+        }
     }
 
     public void doLoginIntent(View view){
         Intent loginIntent = new Intent(CreateAccount.this, LoginActivity.class);
         startActivity(loginIntent);
-    }
-
-    public void testPushMethod(View view){
-        System.out.println("this is just a test");
     }
 
 }

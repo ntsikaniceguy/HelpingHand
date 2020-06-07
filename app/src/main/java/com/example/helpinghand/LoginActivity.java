@@ -5,6 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -14,13 +19,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    public void doCreateAccountIntent(View view){
-        Intent createAccountIntent = new Intent(LoginActivity.this,CreateAccount.class);
-        startActivity(createAccountIntent);
-    }
+    public void moveToHomePage(View view){
+        EditText emailText = findViewById(R.id.loginActivityEmail);
+        String emailString = emailText.toString();
 
-    public void doPatientHomePageIntent(View view){
-        Intent patientHomePageIntent = new Intent(LoginActivity.this, PatientHomePage.class);
-        startActivity(patientHomePageIntent);
+
     }
 }

@@ -14,4 +14,6 @@
     <string name="volunteerRadioButton">Volunteer</string>
     <string name="assistanceRadioAssistance">Assistance</string>
     <string name="create_account_button">Create Account</string>
+    <string name="surname">Surname</string>
+    <string name="createAccountPassword">Password</string>
 </resources>
