@@ -122,8 +122,40 @@ public class CreateAccount extends AppCompatActivity {
 
 
         if(radioButton.getText() == "volunteer"){
-            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty() && securePassword.isEmpty())
+            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty() && securePasswozrd.isEmpty())
             ) {
+                
+               // String queryurl = urlBuilder.build().toString();
+                // Request request = new Request.Builder().url(queryurl).build();
+                
+                // client.newCall(request).enqueue(new Callback() {
+               //@Override
+            //public void onFailure(Call call, IOException e) {
+                //e.printStackTrace();
+            //}
+
+            //@Override
+            //public void onResponse(Call call, Response response) throws IOException {
+               // if(response.isSuccessful())
+                //{
+                   // final String result = response.body().toString();
+                    // MessageActivity.this.runOnUiThread(new Runnable() {
+                       // @Override
+                        //public void run() {
+                            
+                           // if(result=="NULL")
+                            //{
+                              //  exsits;
+                            //}
+                                
+                        //}
+                    //});
+                //}
+            //}
+        //});
+                
+                
+                
                 Intent volunteerIntent = new Intent(CreateAccount.this, VolunteerHomePage.class);
                 startActivity(volunteerIntent);
             }else{
