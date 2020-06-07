@@ -40,16 +40,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.example.helpinghand.SaltedMD5Example.*;
 
 
 public class CreateAccount extends AppCompatActivity {
 
     private RadioGroup radioGroup;
     private RadioButton radioButton;
-    byte [] salt = getSalt();
-
-    public CreateAccount() throws NoSuchProviderException, NoSuchAlgorithmException {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +57,25 @@ public class CreateAccount extends AppCompatActivity {
 
         EditText nameText = findViewById(R.id.createAccountNameTextId);
         String name = nameText.toString();
+        nameText.setText("");
 
         EditText surnameText = findViewById(R.id.createAccountSurnameTextId);
         String surname = surnameText.toString();
+        surnameText.setText("");
 
         EditText emailText = findViewById(R.id.createAccountEmailTextId);
         String email = emailText.toString();
+        emailText.setText("");
 
         EditText phoneNumberText = findViewById(R.id.createAccountPhoneId);
         String phoneNumber = phoneNumberText.toString();
+        phoneNumberText.setText("");
 
+       /*
         EditText passwordText = findViewById(R.id.loginActivityPassword);
         String passwordStringLiteral = passwordText.toString();
         String securePassword = getSecurePassword(passwordStringLiteral, salt);
-
+       */
 
         radioGroup = findViewById(R.id.radioGroup);
         radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
@@ -111,29 +112,27 @@ public class CreateAccount extends AppCompatActivity {
             urlBuilder.addQueryParameter("contact", phoneNumber);
         }
 
-        if(securePassword.isEmpty()){
-            passwordText.setError("Password is required!");
-        }else{
-            urlBuilder.addQueryParameter("password", securePassword);
-        }
 
         urlBuilder.addQueryParameter("address", null);
         urlBuilder.addQueryParameter("image", null);
+        urlBuilder.addQueryParameter("password", null);
 
 
         if(radioButton.getText() == "volunteer"){
-            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty() && securePassword.isEmpty())
+            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty()) //&& securePassword.isEmpty())
             ) {
-                Intent volunteerIntent = new Intent(CreateAccount.this, VolunteerHomePage.class);
+                Toast.makeText(this, "Sign up successful!", Toast.LENGTH_SHORT).show();
+                Intent volunteerIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
                 startActivity(volunteerIntent);
             }else{
                 Toast.makeText(this, "Incomplete sign up form!", Toast.LENGTH_SHORT).show();
             }
 
         }else{
-            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty() && securePassword.isEmpty())
+            if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty()) //&& securePassword.isEmpty())
             ) {
-                Intent patientIntent = new Intent(CreateAccount.this, PatientHomePage.class);
+                Toast.makeText(this, "Sign up successful!", Toast.LENGTH_SHORT).show();
+                Intent patientIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
                 startActivity(patientIntent);
 
             }else{
