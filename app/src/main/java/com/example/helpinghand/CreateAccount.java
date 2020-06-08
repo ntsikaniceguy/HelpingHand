@@ -70,10 +70,9 @@ public class CreateAccount extends AppCompatActivity {
         final String phoneNumber = phoneNumberText.toString();
         phoneNumberText.setText("");
 
-    /*    EditText passwordText = findViewById(R.id.loginActivityPassword);
-        String passwordStringLiteral = passwordText.toString();
-        String securePassword = getSecurePassword(passwordStringLiteral, salt);
-*/
+        EditText passwordText = findViewById(R.id.loginActivityPassword);
+        final String passwordString = passwordText.toString();
+        passwordText.setText("");
 
         radioGroup = findViewById(R.id.radioGroup);
         radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
@@ -109,16 +108,15 @@ public class CreateAccount extends AppCompatActivity {
             urlBuilder.addQueryParameter("contact", phoneNumber);
         }
 
-        /*   if(securePassword.isEmpty()){
+        if(passwordString.isEmpty()){
             passwordText.setError("Password is required!");
         }else{
-            urlBuilder.addQueryParameter("password", securePassword);
+            urlBuilder.addQueryParameter("password", passwordString);
         }
-        */
 
         urlBuilder.addQueryParameter("address", null);
         urlBuilder.addQueryParameter("image", null);
-        urlBuilder.addQueryParameter("password", null);
+
 
          String queryurl = urlBuilder.build().toString();
          Request request = new Request.Builder().url(queryurl).build();
@@ -143,7 +141,7 @@ public class CreateAccount extends AppCompatActivity {
                             else{
                                 if(radioButton.getText().equals("volunteer")){
                                     if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty())){
-                                        Intent volunteerIntent = new Intent(CreateAccount.this, VolunteerHomePage.class);
+                                        Intent volunteerIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
                                         startActivity(volunteerIntent);
                                     }else{
                                         Toast.makeText(CreateAccount.this, "Incomplete sign up form!", Toast.LENGTH_SHORT).show();
@@ -152,7 +150,7 @@ public class CreateAccount extends AppCompatActivity {
                                 }
                                 else{
                                     if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty())) {
-                                        Intent patientIntent = new Intent(CreateAccount.this, PatientHomePage.class);
+                                        Intent patientIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
                                         startActivity(patientIntent);
 
                                     }else{
