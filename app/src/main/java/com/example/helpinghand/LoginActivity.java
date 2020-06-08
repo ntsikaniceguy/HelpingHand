@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -23,6 +24,6 @@ public class LoginActivity extends AppCompatActivity {
         EditText emailText = findViewById(R.id.loginActivityEmail);
         String emailString = emailText.toString();
 
-
     }
+
 }
