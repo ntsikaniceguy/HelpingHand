@@ -55,23 +55,23 @@ public class CreateAccount extends AppCompatActivity {
         final RadioButton radioButton;
 
         EditText nameText = findViewById(R.id.createAccountNameTextId);
-        final String name = nameText.toString();
+        final String name = nameText.getText().toString();
         nameText.setText("");
 
         EditText surnameText = findViewById(R.id.createAccountSurnameTextId);
-        final String surname = surnameText.toString();
+        final String surname = surnameText.getText().toString();
         surnameText.setText("");
 
         EditText emailText = findViewById(R.id.createAccountEmailTextId);
-        final String email = emailText.toString();
+        final String email = emailText.getText().toString();
         emailText.setText("");
 
         EditText phoneNumberText = findViewById(R.id.createAccountPhoneId);
-        final String phoneNumber = phoneNumberText.toString();
+        final String phoneNumber = phoneNumberText.getText().toString();
         phoneNumberText.setText("");
 
         EditText passwordText = findViewById(R.id.loginActivityPassword);
-        final String passwordString = passwordText.toString();
+        final String passwordString = passwordText.getText().toString();
         passwordText.setText("");
 
         radioGroup = findViewById(R.id.radioGroup);
