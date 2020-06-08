@@ -69,6 +69,7 @@ public class CreateAccount extends AppCompatActivity {
 
         String type;
 
+        //please find a way to fix the readio thing i tried this doesnt work and im lazy
         if(rbutton.getText().toString()=="Volunteer")
         {
             type = "V";
@@ -124,19 +125,18 @@ public class CreateAccount extends AppCompatActivity {
 
                 if(response.isSuccessful())
                 {
-                    final String result = response.body().toString();
+                    final String result = response.body().string();
 
                     CreateAccount.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
 
-                            if(result.equalsIgnoreCase("1"))
+                            if(result.equalsIgnoreCase("EXI"))
                             {
                                 Toast.makeText(CreateAccount.this, "User already exists", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-
                                moveToSelfie();
                             }
                         }
