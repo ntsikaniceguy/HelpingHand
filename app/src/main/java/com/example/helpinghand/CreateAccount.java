@@ -124,7 +124,7 @@ public class CreateAccount extends AppCompatActivity {
 
                 if(response.isSuccessful())
                 {
-                    final String result = response.body().string();
+                    final String result = response.body().toString();
 
                     CreateAccount.this.runOnUiThread(new Runnable() {
                         @Override
