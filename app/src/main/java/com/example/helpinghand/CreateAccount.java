@@ -51,118 +51,50 @@ public class CreateAccount extends AppCompatActivity {
 
     public void doCreateAccount (View view) {
 
-        final RadioGroup radioGroup;
-        final RadioButton radioButton;
+        TextView edtname = (TextView)findViewById(R.id.createAccountNameTextId);
+        TextView edtsurname = (TextView)findViewById(R.id.createAccountSurnameTextId);
+        TextView edtemail = (TextView)findViewById(R.id.createAccountEmailTextId);
+        TextView edtphone = (TextView)findViewById(R.id.createAccountPhoneId);
+        TextView edtpassword = (TextView)findViewById(R.id.createAccountPassword);
+        final RadioGroup rgroup = (RadioGroup)findViewById(R.id.radioGroup);
 
-        EditText nameText = findViewById(R.id.createAccountNameTextId);
-        final String name = nameText.getText().toString();
-        nameText.setText("");
+        int rbuttonID = rgroup.getCheckedRadioButtonId();
+        RadioButton rbutton = (RadioButton) rgroup.findViewById(rbuttonID);
 
-        EditText surnameText = findViewById(R.id.createAccountSurnameTextId);
-        final String surname = surnameText.getText().toString();
-        surnameText.setText("");
+        String name = edtname.getText().toString();
+        edtname.setText("");
+        String surname = edtsurname.getText().toString();
+        edtsurname.setText("");
+        String email = edtemail.getText().toString();
+        edtemail.setText("");
+        String phone = edtphone.getText().toString();
+        edtphone.setText("");
+        String password = edtpassword.getText().toString();
+        edtpassword.setText("");
 
-        EditText emailText = findViewById(R.id.createAccountEmailTextId);
-        final String email = emailText.getText().toString();
-        emailText.setText("");
+        String type;
 
-        EditText phoneNumberText = findViewById(R.id.createAccountPhoneId);
-        final String phoneNumber = phoneNumberText.getText().toString();
-        phoneNumberText.setText("");
-
-        EditText passwordText = findViewById(R.id.loginActivityPassword);
-        final String passwordString = passwordText.getText().toString();
-        passwordText.setText("");
-
-        radioGroup = findViewById(R.id.radioGroup);
-        radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://lamp.ms.wits.ac.za/home/s2241186/signup.php").newBuilder();
-
-        if(radioButton.getText() == "volunteer"){
-            urlBuilder.addQueryParameter("type", "V");
-        } else{
-            urlBuilder.addQueryParameter("type", "P");
+        //please find a way to fix the readio thing i tried this doesnt work and im lazy
+        if(rbutton.getText().toString().equalsIgnoreCase("Volunteer"))
+        {
+            type = "V";
+        }
+        else
+        {
+            type = "P";
         }
 
-        if(name.isEmpty()){
-            nameText.setError("First name required!");
-        }else{
-            urlBuilder.addQueryParameter("name", name);
+
+        if(name.isEmpty()||surname.isEmpty()||email.isEmpty()||phone.isEmpty()||password.isEmpty())
+        {
+            Toast.makeText(CreateAccount.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Add(type,name,surname,email,phone,password);
         }
 
-        if(surname.isEmpty()){
-            surnameText.setError("Surname is required!");
-        }else{
-            urlBuilder.addQueryParameter("surname", surname);
-        }
 
-        if(email.isEmpty()){
-            emailText.setError("Email is required!");
-        }else{
-            urlBuilder.addQueryParameter("email", email);
-        }
-
-        if(phoneNumber.isEmpty()){
-            phoneNumberText.setError("Phone number is required!");
-        }else{
-            urlBuilder.addQueryParameter("contact", phoneNumber);
-        }
-
-        if(passwordString.isEmpty()){
-            passwordText.setError("Password is required!");
-        }else{
-            urlBuilder.addQueryParameter("password", passwordString);
-        }
-
-        urlBuilder.addQueryParameter("address", null);
-        urlBuilder.addQueryParameter("image", null);
-
-
-         String queryurl = urlBuilder.build().toString();
-         Request request = new Request.Builder().url(queryurl).build();
-         OkHttpClient client = new OkHttpClient();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                 if(response.isSuccessful()) {
-                    final String result = response.body().toString();
-                    CreateAccount.this.runOnUiThread(new Runnable() {
-                    @Override
-                        public void run() {
-                            if( result.equals("NULL")) {
-                                Toast.makeText(CreateAccount.this, "Account already exists, please sign up!", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                if(radioButton.getText().equals("volunteer")){
-                                    if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty())){
-                                        Intent volunteerIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
-                                        startActivity(volunteerIntent);
-                                    }else{
-                                        Toast.makeText(CreateAccount.this, "Incomplete sign up form!", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                                else{
-                                    if( !(name.isEmpty() && surname.isEmpty() && email.isEmpty() && phoneNumber.isEmpty())) {
-                                        Intent patientIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
-                                        startActivity(patientIntent);
-
-                                    }else{
-                                        Toast.makeText(CreateAccount.this, "Please complete sign up form!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        }
-                    });
-                 }
-            }
-        });
     }
 
     public void doLoginIntent(View view){
@@ -170,4 +102,59 @@ public class CreateAccount extends AppCompatActivity {
         startActivity(loginIntent);
     }
 
+    public void Add(String type,String name,String surname,String email,String phone,String password)
+    {
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://lamp.ms.wits.ac.za/home/s2241186/signup.php";
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+        urlBuilder.addQueryParameter("type",type);
+        urlBuilder.addQueryParameter("name",name);
+        urlBuilder.addQueryParameter("email",email);
+        urlBuilder.addQueryParameter("surname",surname);
+        urlBuilder.addQueryParameter("address",null);
+        urlBuilder.addQueryParameter("password",password);
+        urlBuilder.addQueryParameter("contact",phone);
+        urlBuilder.addQueryParameter("image",null);
+
+        String queryurl = urlBuilder.build().toString();
+        Request request = new Request.Builder().url(queryurl).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+
+                if(response.isSuccessful())
+                {
+                    final String result = response.body().string();
+
+                    CreateAccount.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if(result.equalsIgnoreCase("EXI"))
+                            {
+                                Toast.makeText(CreateAccount.this, "User already exists", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                moveToSelfie();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public void moveToSelfie()
+    {
+        Intent volunteerIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
+        startActivity(volunteerIntent);
+    }
 }
+
