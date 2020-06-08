@@ -130,12 +130,13 @@ public class CreateAccount extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            if(result =="NULL")
+                            if(result.equalsIgnoreCase("1"))
                             {
                                 Toast.makeText(CreateAccount.this, "User already exists", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
+
                                moveToSelfie();
                             }
                         }
