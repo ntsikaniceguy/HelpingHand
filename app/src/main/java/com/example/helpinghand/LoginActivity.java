@@ -29,13 +29,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    public void moveToHomePage(View view){
-        EditText emailText = findViewById(R.id.loginActivityEmail);
-        String emailString = emailText.toString();
-
+    public void LoginToCreate(View view)
+    {
+        Intent createIntent = new Intent(LoginActivity.this,CreateAccount.class);
+        startActivity(createIntent);
     }
 
-    public void btnLogin()
+
+    public void btnLogin(View view)
     {
         TextView edtemail = (TextView)findViewById(R.id.loginActivityEmail);
         TextView edtpassword = (TextView)findViewById(R.id.loginActivityPassword);
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    void ForgotPassword(View view)
+    public void ForgotPassword(View view)
     {
         TextView edtemail = (TextView)findViewById(R.id.loginActivityEmail);
         String email = edtemail.getText().toString();
