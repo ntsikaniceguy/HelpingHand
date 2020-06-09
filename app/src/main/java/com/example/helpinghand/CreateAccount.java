@@ -64,7 +64,7 @@ public class CreateAccount extends AppCompatActivity {
         String name = edtname.getText().toString();
         edtname.setText("");
         String surname = edtsurname.getText().toString();
-        edtsurname.setText("");
+        edtname.setText("");
         String email = edtemail.getText().toString();
         edtemail.setText("");
         String phone = edtphone.getText().toString();
@@ -156,5 +156,5 @@ public class CreateAccount extends AppCompatActivity {
         Intent volunteerIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
         startActivity(volunteerIntent);
     }
-}
 
+}

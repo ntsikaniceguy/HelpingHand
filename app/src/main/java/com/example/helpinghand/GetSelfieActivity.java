@@ -99,10 +99,9 @@ public class GetSelfieActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
     }
 
-
-
-
-
-
+    public void doVolunteerHomePageIntent(View view){
+        Intent volunteerHomePageIntent = new Intent(this, VolunteerHomePage.class);
+        startActivity(volunteerHomePageIntent);
+    }
 
 }
