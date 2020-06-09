@@ -35,6 +35,16 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(createIntent);
     }
 
+    void LoginToPatient(String json)
+    {
+        //dont know how to send variables to next activity
+    }
+
+    void LoginToVolunteer(String json)
+    {
+        //dont know how to send variables to next activity
+    }
+
 
     public void btnLogin(View view)
     {
@@ -77,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful())
                 {
                     final String result = response.body().string();
-                    final String data = response.body().toString();
 
                     if(result.equalsIgnoreCase("NOTE"))
                     {
@@ -90,8 +99,24 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        //move to next activity
-                        //data is stored in String data
+                        final String json = result.substring(1);
+                        final char type = result.charAt(0);
+
+                        LoginActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if(type == 'V')
+                                {
+                                    LoginToVolunteer(json);
+                                }
+                                else if (type == 'P')
+                                {
+                                    LoginToPatient(json);
+                                }
+
+                            }
+                        });
                     }
                 }
             }
