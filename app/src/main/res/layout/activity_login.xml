@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="doCreateAccountIntent"
     tools:context=".LoginActivity">
 
     <TextView
@@ -17,7 +16,7 @@
         android:layout_marginEnd="157dp"
         android:layout_marginRight="157dp"
         android:layout_marginBottom="614dp"
-        android:text="Welcome back."
+        android:text="@string/welcome_back_login_page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,10 +33,11 @@
         android:layout_marginRight="99dp"
         android:layout_marginBottom="10dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email_text_login_activity"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/loginActivityPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -52,7 +52,7 @@
         android:layout_marginRight="99dp"
         android:layout_marginBottom="362dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password_text_login_activity"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
         android:layout_marginRight="162dp"
         android:layout_marginBottom="307dp"
         android:onClick="moveToHomePage"
-        android:text="Login"
+        android:text="@string/login_button_login_activity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +86,8 @@
         android:layout_marginTop="37dp"
         android:layout_marginEnd="168dp"
         android:layout_marginRight="168dp"
-        android:text="Forget password?"
+        android:onClick="doForgotPassword"
+        android:text="@string/forget_password_text_login_page"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button4" />
@@ -101,7 +102,7 @@
         android:layout_marginEnd="78dp"
         android:layout_marginRight="78dp"
         android:layout_marginBottom="86dp"
-        android:text="Don't have an account? Create one here."
+        android:text="@string/don_t_have_an_account_create_one_here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

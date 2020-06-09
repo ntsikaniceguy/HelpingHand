@@ -21,4 +21,10 @@
     <string name="upload_button_get_selfie_activity">Upload</string>
     <string name="all_set_press_here_to_continue">All set? Press here to continue.</string>
     <string name="you_re_almost_there_we_just_need_a_selfie_of_you_so_that_your_patient_knows_what_you_look_like_please_take_a_picture_or_upload_one_if_you_d_like">You\'re almost there. We Just need a selfie of you so that your patient knows what you look like. Please Take a picture or upload one if you\'d like.</string>
+    <string name="welcome_back_login_page">Welcome back.</string>
+    <string name="email_text_login_activity">Email</string>
+    <string name="password_text_login_activity">Password</string>
+    <string name="login_button_login_activity">Login</string>
+    <string name="forget_password_text_login_page">Forget password?</string>
+    <string name="don_t_have_an_account_create_one_here">Don\'t have an account? Create one here.</string>
 </resources>
