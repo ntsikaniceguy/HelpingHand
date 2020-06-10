@@ -62,15 +62,20 @@ public class CreateAccount extends AppCompatActivity {
         RadioButton rbutton = (RadioButton) rgroup.findViewById(rbuttonID);
 
         String name = edtname.getText().toString();
+        edtname.setText("");
         String surname = edtsurname.getText().toString();
+        edtname.setText("");
         String email = edtemail.getText().toString();
+        edtemail.setText("");
         String phone = edtphone.getText().toString();
+        edtphone.setText("");
         String password = edtpassword.getText().toString();
+        edtpassword.setText("");
 
         String type;
 
         //please find a way to fix the readio thing i tried this doesnt work and im lazy
-        if(rbutton.getText().toString()=="Volunteer")
+        if(rbutton.getText().toString().equalsIgnoreCase("Volunteer"))
         {
             type = "V";
         }
@@ -137,7 +142,7 @@ public class CreateAccount extends AppCompatActivity {
                             }
                             else
                             {
-                               moveToSelfie();
+                                moveToSelfie();
                             }
                         }
                     });
@@ -153,5 +158,3 @@ public class CreateAccount extends AppCompatActivity {
     }
 
 }
-
-

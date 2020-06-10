@@ -29,6 +29,7 @@ public class GetSelfieActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private static final int REQUEST_IMAGE_CAPTURE = 101;
+    private static final int RESULT_LOAD_IMAGE = 1;
     String pathToFile;
 
     @Override
@@ -73,14 +74,34 @@ public class GetSelfieActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode==REQUEST_IMAGE_CAPTURE && resultCode == 1){
-            Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
-            imageView.setImageBitmap(bitmap);
-        }
-
         super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode) {
+            case REQUEST_IMAGE_CAPTURE:
+                if (resultCode == 1) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
+                    imageView.setImageBitmap(bitmap);
+                }
+                break;
+
+            case RESULT_LOAD_IMAGE:
+                if (resultCode == RESULT_OK && data != null) {
+                    Uri selectedImage = data.getData();
+                    imageView.setImageURI(selectedImage);
+                }
+                break;
+        }
     }
 
 
+    public void doUploadMethod(View view){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+    }
+
+    public void doVolunteerHomePageIntent(View view){
+        Intent volunteerHomePageIntent = new Intent(this, VolunteerHomePage.class);
+        startActivity(volunteerHomePageIntent);
+    }
 
 }
