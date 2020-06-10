@@ -53,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(volunteerHomePageIntent);
     }
 
-    public boolean RememberMe(CheckBox remember){
+    public boolean RememberMe(CheckBox remember)
+    {
 
         boolean RememberUser = false;
         remember = findViewById(R.id.checkBoxId);
@@ -89,28 +90,35 @@ public class LoginActivity extends AppCompatActivity {
         return RememberUser;
     }
 
-
     public void btnLogin(View view)
     {
 
         TextView edtemail = (TextView)findViewById(R.id.loginActivityEmail);
         TextView edtpassword = (TextView)findViewById(R.id.loginActivityPassword);
+        CheckBox checkBox = (CheckBox)findViewById(R.id.checkBoxId);
+
 
         String email = edtemail.getText().toString();
+        edtemail.setText("");
         String password = edtpassword.getText().toString();
+        edtpassword.setText("");
+        Boolean remembered = RememberMe(checkBox);
 
         if(email.isEmpty()||password.isEmpty())
         {
             Toast.makeText(LoginActivity.this, "Fill in all fields", Toast.LENGTH_SHORT).show();
         }
         else
-        {
-            Login(email,password);
+            {
+            Login(email,password, remembered);
         }
     }
 
-    void Login(String email,String password)
+    void Login(String email,String password, boolean remember)
     {
+
+
+
         OkHttpClient client = new OkHttpClient();
         String url = "https://lamp.ms.wits.ac.za/home/s2241186/login.php";
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -168,7 +176,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void ForgotPassword(View view) {
+    public void ForgotPassword(View view)
+    {
         TextView edtemail = (TextView)findViewById(R.id.loginActivityEmail);
         String email = edtemail.getText().toString();
 
@@ -182,7 +191,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    void FPConn(String email) {
+    void FPConn(String email)
+    {
         OkHttpClient client = new OkHttpClient();
         String url = "https://lamp.ms.wits.ac.za/home/s2241186/forgotemail.php";
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -216,6 +226,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }
