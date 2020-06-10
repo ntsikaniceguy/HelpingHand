@@ -53,19 +53,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(volunteerHomePageIntent);
     }
 
-    public boolean RememberMe(CheckBox remember)
-    {
+    public boolean RememberMe(){
 
         boolean RememberUser = false;
-        remember = findViewById(R.id.checkBoxId);
-
-        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember", "");
-        if(checkbox.equals("true")){
-            RememberUser = true;
-        }else if(checkbox.equals("false")){
-            RememberUser = false;
-        }
+        CheckBox remember = findViewById(R.id.checkBoxId);
 
         remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -87,38 +78,38 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember", "");
+        if(checkbox.equals("true")){
+            RememberUser = true;
+        }else if(checkbox.equals("false")){
+            RememberUser = false;
+        }
         return RememberUser;
     }
+
 
     public void btnLogin(View view)
     {
 
         TextView edtemail = (TextView)findViewById(R.id.loginActivityEmail);
         TextView edtpassword = (TextView)findViewById(R.id.loginActivityPassword);
-        CheckBox checkBox = (CheckBox)findViewById(R.id.checkBoxId);
-
 
         String email = edtemail.getText().toString();
-        edtemail.setText("");
         String password = edtpassword.getText().toString();
-        edtpassword.setText("");
-        Boolean remembered = RememberMe(checkBox);
 
         if(email.isEmpty()||password.isEmpty())
         {
             Toast.makeText(LoginActivity.this, "Fill in all fields", Toast.LENGTH_SHORT).show();
         }
         else
-            {
-            Login(email,password, remembered);
+        {
+            Login(email,password);
         }
     }
 
-    void Login(String email,String password, boolean remember)
+    void Login(String email,String password)
     {
-
-
-
         OkHttpClient client = new OkHttpClient();
         String url = "https://lamp.ms.wits.ac.za/home/s2241186/login.php";
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -161,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if(type == 'V')
                                 {
-                                    LoginToVolunteer(result);
+                                    LoginToVolunteer(json);
                                 }
                                 else if (type == 'P')
                                 {
@@ -218,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, "email does not exist.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "email doesnt exist", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -226,5 +217,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
