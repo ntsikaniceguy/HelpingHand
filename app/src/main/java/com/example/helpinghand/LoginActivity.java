@@ -3,10 +3,13 @@ package com.example.helpinghand;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PathEffect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,9 +53,45 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(volunteerHomePageIntent);
     }
 
+    public boolean RememberMe(){
+
+        boolean RememberUser = false;
+        CheckBox remember = findViewById(R.id.checkBoxId);
+
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "false");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember", "");
+        if(checkbox.equals("true")){
+            RememberUser = true;
+        }else if(checkbox.equals("false")){
+            RememberUser = false;
+        }
+        return RememberUser;
+    }
+
 
     public void btnLogin(View view)
     {
+
         TextView edtemail = (TextView)findViewById(R.id.loginActivityEmail);
         TextView edtpassword = (TextView)findViewById(R.id.loginActivityPassword);
 
@@ -104,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        final String json = result.substring(1);
+                        final String json = result.substring(1, result.length()-1);
                         final char type = result.charAt(0);
 
                         LoginActivity.this.runOnUiThread(new Runnable() {
@@ -113,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if(type == 'V')
                                 {
-                                    LoginToVolunteer(json);
+                                    LoginToVolunteer(result);
                                 }
                                 else if (type == 'P')
                                 {
@@ -178,4 +217,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
