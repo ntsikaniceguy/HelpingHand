@@ -53,10 +53,18 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(volunteerHomePageIntent);
     }
 
-    public boolean RememberMe(){
+    public boolean RememberMe(CheckBox remember){
 
         boolean RememberUser = false;
-        CheckBox remember = findViewById(R.id.checkBoxId);
+        remember = findViewById(R.id.checkBoxId);
+
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember", "");
+        if(checkbox.equals("true")){
+            RememberUser = true;
+        }else if(checkbox.equals("false")){
+            RememberUser = false;
+        }
 
         remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -78,13 +86,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember", "");
-        if(checkbox.equals("true")){
-            RememberUser = true;
-        }else if(checkbox.equals("false")){
-            RememberUser = false;
-        }
         return RememberUser;
     }
 
@@ -167,8 +168,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void ForgotPassword(View view)
-    {
+    public void ForgotPassword(View view) {
         TextView edtemail = (TextView)findViewById(R.id.loginActivityEmail);
         String email = edtemail.getText().toString();
 
@@ -182,8 +182,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    void FPConn(String email)
-    {
+    void FPConn(String email) {
         OkHttpClient client = new OkHttpClient();
         String url = "https://lamp.ms.wits.ac.za/home/s2241186/forgotemail.php";
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -209,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, "email doesnt exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "email does not exist.", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
