@@ -33,7 +33,7 @@
         android:layout_marginRight="99dp"
         android:layout_marginBottom="10dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/activity_login_email_textview"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/loginActivityPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
         android:layout_marginRight="99dp"
         android:layout_marginBottom="362dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/login_activity_password_text"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,8 +73,10 @@
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivityPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/loginActivityPassword"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView8"

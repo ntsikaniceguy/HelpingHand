@@ -27,4 +27,6 @@
     <string name="login_button_login_activity">Login</string>
     <string name="forget_password_text_login_page">Forget password?</string>
     <string name="don_t_have_an_account_create_one_here">Don\'t have an account? Create one here.</string>
+    <string name="activity_login_email_textview">Email</string>
+    <string name="login_activity_password_text">Password</string>
 </resources>
