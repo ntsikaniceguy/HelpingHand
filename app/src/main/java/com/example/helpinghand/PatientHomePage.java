@@ -3,12 +3,15 @@ package com.example.helpinghand;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PatientHomePage extends AppCompatActivity {
+
+    TextView mTV;
 
     int ID;
     String name;
@@ -22,6 +25,9 @@ public class PatientHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_patient_home_page);
         String json = getIntent().getStringExtra("JSON");
         JSONdata(json);
+
+        mTV = (TextView)findViewById(R.id.welcomeMessageTextId);
+        mTV.setText(name);
     }
 
     void JSONdata(String json)
