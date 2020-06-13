@@ -15,9 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -29,12 +26,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
-    int JSONID;
-    String JSONname;
-    String JSONemail;
-    String JSONsurname;
-    String JSONcontact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +39,54 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(createIntent);
     }
 
-    void LoginToPatient(String json) throws JSONException {
+    void LoginToPatient(String json)
+    {
         Intent patientHomePage = new Intent(this, PatientHomePage.class);
-        patientHomePage.putExtra("JSON", JSONdata(json));
+        patientHomePage.putExtra("JSON", json);
         startActivity(patientHomePage);
     }
 
-    void LoginToVolunteer(String json) throws JSONException {
+    void LoginToVolunteer(String json)
+    {
         Intent volunteerHomePageIntent = new Intent(this, VolunteerHomePage.class);
-        volunteerHomePageIntent.putExtra("JSON", JSONdata(json));
+        volunteerHomePageIntent.putExtra("JSON", json);
         startActivity(volunteerHomePageIntent);
     }
 
+    public boolean RememberMe(){
 
+        boolean RememberUser = false;
+        CheckBox remember = findViewById(R.id.checkBoxId);
+
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "false");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember", "");
+        if(checkbox.equals("true")){
+            RememberUser = true;
+        }else if(checkbox.equals("false")){
+            RememberUser = false;
+        }
+        return RememberUser;
+    }
 
 
     public void btnLogin(View view)
@@ -126,19 +152,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if(type == 'V')
                                 {
-                                    try {
-                                        LoginToVolunteer(json);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    LoginToVolunteer(json);
                                 }
                                 else if (type == 'P')
                                 {
-                                    try {
-                                        LoginToPatient(json);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    LoginToPatient(json);
                                 }
 
                             }
@@ -191,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, "email does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "email doesnt exist", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -199,67 +217,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    public boolean RememberMe(){
-
-        boolean RememberUser = false;
-        CheckBox remember = findViewById(R.id.checkBoxId);
-
-        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "false");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember", "");
-        if(checkbox.equals("true")){
-            RememberUser = true;
-        }else if(checkbox.equals("false")){
-            RememberUser = false;
-        }
-        return RememberUser;
-    }
-
-    String JSONdata(String json) throws JSONException {
-
-        JSONArray jsonArray = new JSONArray(json);
-        JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-        String type = jsonObject.toString();
-        if(type.equalsIgnoreCase("V"))
-        {
-            JSONID = jsonObject.getInt("VOLUNTEER_ID");
-            JSONname = jsonObject.getString("VOLUNTEER_NAME");
-            JSONemail = jsonObject.getString("VOLUNTEER_ID");
-            JSONsurname = jsonObject.getString("VOLUNTEER_ID");
-            JSONcontact = jsonObject.getString("VOLUNTEER_ID");
-        }
-        else{
-            JSONID = jsonObject.getInt("PATIENT_ID");
-            JSONname = jsonObject.getString("PATIENT_NAME");
-            JSONemail = jsonObject.getString("PATIENT_EMAIL");
-            JSONsurname = jsonObject.getString("PATIENT_SURNAME");
-            JSONcontact = jsonObject.getString("PATIENT_CONTACT");
-        }
-
-        return type;
-    }
-
 
 
 }

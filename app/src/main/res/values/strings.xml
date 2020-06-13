@@ -29,4 +29,14 @@
     <string name="don_t_have_an_account_create_one_here">Don\'t have an account? Create one here.</string>
     <string name="activity_login_email_textview">Email</string>
     <string name="login_activity_password_text">Password</string>
+    <string name="messages_nav_bar">Messages</string>
+    <string name="profile_nav_bar">Profile</string>
+    <string name="requests_nav_bar">Requests</string>
+    <string name="settings_nav_bar">Settings</string>
+    <string name="help_nav_bar">Help</string>
+    <string name="communicate_nav_bar">Communicate</string>
+    <string name="share_nav_bar">Share</string>
+    <string name="textview">TextView</string>
+    <string name="navigation_draw_open">Open navigation drawer</string>
+    <string name="navigation_draw_close">Close navigation drawer</string>
 </resources>

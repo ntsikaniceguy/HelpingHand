@@ -20,8 +20,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MessagingActivity"></activity>
         <activity android:name=".GetSelfieActivity" />
-        <activity android:name=".VolunteerHomePage" />
-        <activity android:name=".PatientHomePage" />
+        <activity android:name=".VolunteerHomePage"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".PatientHomePage"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".CreateAccount" />
         <activity android:name=".MainActivity">

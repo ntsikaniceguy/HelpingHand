@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/nav_header">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/ic_messages"
+            android:title="@string/messages_nav_bar" />
+        <item
+            android:id="@+id/nav_name"
+            android:icon="@drawable/ic_profile_pic"
+            android:title="@string/profile_nav_bar" />
+        <item
+            android:id="@+id/nav_requests"
+            android:icon="@drawable/ic_requests"
+            android:title="@string/requests_nav_bar" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings_nav_bar" />
+    </group>
+
+    <item android:title="@string/communicate_nav_bar">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/share_nav_bar" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help"
+                android:title="@string/help_nav_bar" />
+        </menu>
+    </item>
+</menu>
