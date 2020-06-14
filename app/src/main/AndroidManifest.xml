@@ -21,8 +21,10 @@
         <activity android:name=".MessagingActivity"></activity>
         <activity android:name=".GetSelfieActivity" />
         <activity android:name=".VolunteerHomePage"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".PatientHomePage"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".CreateAccount" />
