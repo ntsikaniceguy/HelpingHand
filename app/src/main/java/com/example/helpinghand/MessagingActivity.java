@@ -94,7 +94,41 @@ public class MessagingActivity extends AppCompatActivity {
 
     public void btnSend()
     {
-        //takes what user typed out and sends
+        //get text from edittext
+        String text = "";
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://lamp.ms.wits.ac.za/home/s2241186/ChatAdd.php";
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+
+        urlBuilder.addQueryParameter("UserID",userID);
+        urlBuilder.addQueryParameter("ClientID",clientID);
+        urlBuilder.addQueryParameter("Text",text);
+
+        String queryurl = urlBuilder.build().toString();
+        Request request = new Request.Builder().url(queryurl).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                if(response.isSuccessful())
+                {
+                    MessagingActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //clear edittext
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
 }
