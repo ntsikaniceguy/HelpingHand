@@ -36,7 +36,7 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
 
 
         String json = getIntent().getStringExtra("JSON");
-
+        JSONdata(json);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
