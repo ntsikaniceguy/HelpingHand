@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void LoginToPatient(String json)
     {
-        Intent patientHomePage = new Intent(this, PatientHomePage.class);
+        Intent patientHomePage = new Intent(this, PatientMapActivity.class);
         patientHomePage.putExtra("JSON", json);
         startActivity(patientHomePage);
     }
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                                if(type == 'V')
+                                if(type =='V')
                                 {
                                     LoginToVolunteer(json);
                                 }

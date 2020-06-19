@@ -64,7 +64,7 @@ public class CreateAccount extends AppCompatActivity {
         String name = edtname.getText().toString();
         edtname.setText("");
         String surname = edtsurname.getText().toString();
-        edtname.setText("");
+        edtsurname.setText("");
         String email = edtemail.getText().toString();
         edtemail.setText("");
         String phone = edtphone.getText().toString();

@@ -188,14 +188,16 @@
         android:layout_marginEnd="99dp"
         android:layout_marginRight="99dp"
         android:layout_marginBottom="22dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/createAccountPassword"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountPhoneId"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.333" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
