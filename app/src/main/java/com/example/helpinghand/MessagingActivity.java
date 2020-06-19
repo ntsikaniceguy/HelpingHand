@@ -3,10 +3,20 @@ package com.example.helpinghand;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,10 +33,15 @@ public class MessagingActivity extends AppCompatActivity {
     String clientID;
     int nextCheck = 30000;
 
+    private MessageAdapter adapter = new MessageAdapter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
+
+        ListView messagelist  = (ListView)findViewById(R.id.messageList);
+        messagelist.setAdapter(adapter);
 
         getID();
         Timer timer = new Timer();
@@ -89,13 +104,25 @@ public class MessagingActivity extends AppCompatActivity {
 
     void AddClientText(String text)
     {
-        //adds what other person sent to UI
+        JSONObject item = new JSONObject();
+
+        try
+        {
+            item.put("msg",text);
+            item.put("user",false);
+            adapter.Additem(item);
+
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void btnSend()
     {
-        //get text from edittext
-        String text = "";
+        final EditText msgBox = (EditText)findViewById(R.id.messageBox);
+        final String text = msgBox.getText().toString();
 
         OkHttpClient client = new OkHttpClient();
         String url = "https://lamp.ms.wits.ac.za/home/s2241186/ChatAdd.php";
@@ -121,14 +148,93 @@ public class MessagingActivity extends AppCompatActivity {
                 {
                     MessagingActivity.this.runOnUiThread(new Runnable() {
                         @Override
-                        public void run() {
-                            //clear edittext
+                        public void run()
+                        {
+
+                            JSONObject item = new JSONObject();
+
+                            try
+                            {
+                                msgBox.setText("");
+                                item.put("msg",text);
+                                item.put("user",true);
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+
                         }
                     });
                 }
             }
         });
 
+    }
+
+
+    public class MessageAdapter extends BaseAdapter
+    {
+        List<JSONObject> messageList = new ArrayList<>();
+
+        @Override
+        public int getCount() {
+            return messageList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return messageList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup parent) {
+
+            if(view == null)
+            {
+                view  = getLayoutInflater().inflate(R.layout.message_list_item,parent,false);
+            }
+
+
+            TextView getMsg = view.findViewById(R.id.msg_recieved);
+            TextView sendMsg = view.findViewById(R.id.msg_sent);
+
+            JSONObject item  = messageList.get(i);
+
+            try
+            {
+
+                if(item.getBoolean("user"))
+                {
+                    sendMsg.setText(item.getString("msg"));
+                    sendMsg.setVisibility(View.VISIBLE);
+                    getMsg.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    getMsg.setText(item.getString("msg"));
+                    getMsg.setVisibility(View.VISIBLE);
+                    sendMsg.setVisibility(View.INVISIBLE);
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return view;
+        }
+
+        public void Additem(JSONObject item)
+        {
+            messageList.add(item);
+            notifyDataSetChanged();
+        }
     }
 
 }

@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MessagingActivity">
 
-    <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Send"
+       android:textSize="20dp"
+       android:textColor="@color/colorPrimary"
+       android:id="@+id/btnSend"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentRight="true"
+       android:layout_margin="8dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type a message"
+        android:id="@+id/messageBox"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/btnSend"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/messageList"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:layout_above="@id/messageBox"
+        android:layout_below="@id/edtName"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="25dp"
+        android:background="#20B2AA"
+        android:textColor="#F0FFFF"
+        android:id="@+id/edtName"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal" />
+
+
+
+
+</RelativeLayout>
