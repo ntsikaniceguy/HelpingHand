@@ -76,7 +76,7 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
     void getItems()
     {
         OkHttpClient client = new OkHttpClient();
-        String url  = "";
+        String url  = "https://lamp.ms.wits.ac.za/home/s2241186/pendingOrder.php";
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
         String queryurl = urlBuilder.build().toString();
         Request request = new Request.Builder().url(queryurl).build();
