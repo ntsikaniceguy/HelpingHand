@@ -31,7 +31,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     String userID;
     String clientID;
-    int nextCheck = 30000;
+    int nextCheck = 10000;
 
     private MessageAdapter adapter = new MessageAdapter();
 
@@ -119,56 +119,60 @@ public class MessagingActivity extends AppCompatActivity {
         }
     }
 
-    public void btnSend()
+    public void sendMessage(View view)
     {
         final EditText msgBox = (EditText)findViewById(R.id.messageBox);
         final String text = msgBox.getText().toString();
 
-        OkHttpClient client = new OkHttpClient();
-        String url = "https://lamp.ms.wits.ac.za/home/s2241186/ChatAdd.php";
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+        if(!text.equalsIgnoreCase(""))
+        {
+            OkHttpClient client = new OkHttpClient();
+            String url = "https://lamp.ms.wits.ac.za/home/s2241186/ChatAdd.php";
+            HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
 
-        urlBuilder.addQueryParameter("UserID",userID);
-        urlBuilder.addQueryParameter("ClientID",clientID);
-        urlBuilder.addQueryParameter("Text",text);
+            urlBuilder.addQueryParameter("UserID",userID);
+            urlBuilder.addQueryParameter("ClientID",clientID);
+            urlBuilder.addQueryParameter("Text",text);
 
-        String queryurl = urlBuilder.build().toString();
-        Request request = new Request.Builder().url(queryurl).build();
+            String queryurl = urlBuilder.build().toString();
+            Request request = new Request.Builder().url(queryurl).build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                if(response.isSuccessful())
-                {
-                    MessagingActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run()
-                        {
-
-                            JSONObject item = new JSONObject();
-
-                            try
-                            {
-                                msgBox.setText("");
-                                item.put("msg",text);
-                                item.put("user",true);
-                            }
-                            catch (JSONException e)
-                            {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                    if(response.isSuccessful())
+                    {
+                        MessagingActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run()
+                            {
+
+                                JSONObject item = new JSONObject();
+
+                                try
+                                {
+                                    msgBox.setText("");
+                                    item.put("msg",text);
+                                    item.put("user",true);
+                                    adapter.Additem(item);
+                                }
+                                catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
 
     }
 
