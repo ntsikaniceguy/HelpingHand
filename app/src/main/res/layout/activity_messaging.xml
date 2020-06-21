@@ -24,7 +24,8 @@
         android:hint="Type a message"
         android:id="@+id/messageBox"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/btnSend"/>
+        android:layout_toLeftOf="@id/btnSend"
+        android:layout_toStartOf="@id/btnSend" />
 
     <ListView
         android:layout_width="match_parent"

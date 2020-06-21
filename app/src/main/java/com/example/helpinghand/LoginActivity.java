@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void LoginToPatient(String json)
     {
-        Intent patientHomePage = new Intent(this, PatientMapActivity.class);
+        Intent patientHomePage = new Intent(this, BasicMapActivity.class);
         patientHomePage.putExtra("JSON", json);
         startActivity(patientHomePage);
     }
