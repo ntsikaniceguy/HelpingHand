@@ -27,7 +27,7 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
     String email;
     String surname;
     String contact;
-;
+
     private DrawerLayout drawer;
 
     @Override
@@ -62,7 +62,7 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+      public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
@@ -93,6 +93,7 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
         return true;
     }
 
+
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START))
@@ -103,6 +104,8 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
             super.onBackPressed();
         }
     }
+
+
 
     void JSONdata(String json)
     {

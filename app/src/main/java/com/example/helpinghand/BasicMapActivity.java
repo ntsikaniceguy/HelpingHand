@@ -38,21 +38,26 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
@@ -65,7 +70,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class BasicMapActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -87,6 +92,8 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
     private Boolean mLocationPermissionGranted = false;
+
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +126,20 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onButtonClicked(int buttonCode) {
                 if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
-                    //opening or closing navigation drawer
-                } else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
+                    Toolbar toolbar = findViewById(R.id.toolbar);
+                    setSupportActionBar(toolbar);
+
+                    drawer = findViewById(R.id.drawer_layout);
+                    NavigationView navigationView = findViewById(R.id.nav_view);
+                    navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) BasicMapActivity.this);
+
+                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(BasicMapActivity.this, drawer, toolbar,
+                            R.string.navigation_draw_open, R.string.navigation_draw_close);
+
+                    drawer.addDrawerListener(toggle);
+                    toggle.syncState();
+                }
+                else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
                     materialSearchBar.closeSearch();
                 }
             }
@@ -227,6 +246,49 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                break;
+
+            case R.id.nav_settings:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+                break;
+
+            case R.id.nav_requests:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestsFragment()).commit();
+                break;
+
+            case R.id.nav_messages:
+                //moveToMessageActivity();
+                break;
+
+            case R.id.nav_share:
+                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_help:
+                Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START))
+        {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
         switch (requestCode) {
@@ -320,7 +382,6 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -374,5 +435,9 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
                 }
             }
         });
+    }
+
+    public void doMakeRequest(View view){
+
     }
 }
