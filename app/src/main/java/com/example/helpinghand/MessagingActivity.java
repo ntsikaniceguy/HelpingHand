@@ -51,6 +51,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     void getID()
     {
+
         //sets variables to needed values
     }
 
@@ -96,8 +97,6 @@ public class MessagingActivity extends AppCompatActivity {
                     }
                 }
             });
-
-
         }
     }
 

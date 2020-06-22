@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -34,7 +35,6 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_home_page);
 
-
         String json = getIntent().getStringExtra("JSON");
         JSONdata(json);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -49,6 +49,16 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
+    }
+
+    public void moveToMessageActivity(){
+        Intent i = new Intent(this, MessagingActivity.class);
+        startActivity(i);
     }
 
     @Override
@@ -64,6 +74,10 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
 
             case R.id.nav_requests:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestsFragment()).commit();
+                break;
+
+            case R.id.nav_messages:
+                moveToMessageActivity();
                 break;
 
             case R.id.nav_share:
