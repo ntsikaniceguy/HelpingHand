@@ -29,11 +29,11 @@ public class PatientHomePage extends AppCompatActivity {
         String json = getIntent().getStringExtra("JSON");
         JSONdata(json);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+      //  Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, //toolbar,
                 R.string.navigation_draw_open, R.string.navigation_draw_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
