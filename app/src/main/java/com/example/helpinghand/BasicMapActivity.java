@@ -16,7 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -73,20 +76,22 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
 
     private final float DEFAULT_ZOOM = 15;
 
+    private DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_map);
 
+        drawer = findViewById(R.id.drawer_layout2);
+
         materialSearchBar = findViewById(R.id.searchBar);
         Button btnFind = findViewById(R.id.btn_find);
-
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         mapView = mapFragment.getView();
-
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(BasicMapActivity.this);
         Places.initialize(BasicMapActivity.this, getString(R.string.google_maps_api));
@@ -107,7 +112,7 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onButtonClicked(int buttonCode) {
                 if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
-
+                    drawer.openDrawer(GravityCompat.START);
                 } else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
                     materialSearchBar.closeSearch();
                 }
@@ -226,6 +231,15 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
 
     @SuppressLint("MissingPermission")
     @Override
