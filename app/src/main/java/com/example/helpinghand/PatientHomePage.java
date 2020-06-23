@@ -1,6 +1,8 @@
 package com.example.helpinghand;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PatientHomePage extends AppCompatActivity {
+
 
     int ID;
     String name;
@@ -22,6 +25,10 @@ public class PatientHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_patient_home_page);
         String json = getIntent().getStringExtra("JSON");
         JSONdata(json);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
     }
 
     void JSONdata(String json)

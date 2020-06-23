@@ -60,5 +60,8 @@
     <string name="google_maps_api">AIzaSyBb6JbacdsLAEYmr4hdttXKSKOe606dNq4</string>
 
     <string name="todo_image_view">TODO</string>
+    <string name="todo_nav_header">TODO</string>
+    <string name="helping_hand_nav_header">Helping Hand</string>
+    <string name="info_helpinghand_co_za_nav_header">info@HelpingHand.co.za</string>
 
 </resources>

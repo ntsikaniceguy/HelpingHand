@@ -36,9 +36,6 @@
             android:label="@string/title_activity_basic_map"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".PatientMapActivity"
-            android:label="@string/title_activity_patient_map" />
         <activity android:name=".MessagingActivity" />
         <activity android:name=".GetSelfieActivity" />
         <activity
@@ -54,7 +51,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
