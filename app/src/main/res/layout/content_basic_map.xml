@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".BasicMapActivity"
     tools:showIn="@layout/activity_basic_map">
 
-    <fragment
-        android:id="@+id/basic_map"
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/content_basic_map" />
+        android:layout_height="match_parent" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:translationY="-18dp"
         android:src="@drawable/ic_location"
-        />
+        android:translationY="-18dp"
+        android:contentDescription="@string/todo_image_view" />
 
     <com.mancj.materialsearchbar.MaterialSearchBar
         style="@style/MaterialSearchBarLight"
         app:mt_speechMode="false"
-        app:mt_hint="Custom hint"
+        app:mt_hint="Search a place"
         app:mt_maxSuggestionsCount="10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,24 +35,17 @@
         app:mt_navIconEnabled="true"
         android:elevation="5dp"
         android:outlineProvider="bounds"
-        app:mt_placeholder="Search a place"/>
+        app:mt_placeholder="Search a place" tools:targetApi="lollipop"/>
 
     <Button
-        android:id="@+id/requestBtnID"
+        android:id="@+id/btn_find"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/colorPrimary"
-        android:clickable="true"
-        android:onClick="doMakeRequest"
-        android:text="Make request"
+        android:text="@string/make_request"
         android:textColor="#FFFFFF"
-        android:textStyle="bold" />
+        android:background="@color/colorPrimary"
+        android:layout_margin="16dp"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

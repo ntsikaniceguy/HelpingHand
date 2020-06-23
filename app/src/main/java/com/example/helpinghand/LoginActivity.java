@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void LoginToVolunteer(String json)
     {
-        Intent volunteerHomePageIntent = new Intent(this, VolunteerHomePage.class);
+        Intent volunteerHomePageIntent = new Intent(this, BasicMapActivity.class);
         volunteerHomePageIntent.putExtra("JSON", json);
         startActivity(volunteerHomePageIntent);
     }
@@ -209,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, "email doesnt exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Email does not exist", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

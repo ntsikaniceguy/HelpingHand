@@ -142,7 +142,7 @@ public class CreateAccount extends AppCompatActivity {
                             }
                             else
                             {
-                                moveToSelfie();
+                                moveToPermission();
                             }
                         }
                     });
@@ -151,9 +151,9 @@ public class CreateAccount extends AppCompatActivity {
         });
     }
 
-    public void moveToSelfie()
+    public void moveToPermission()
     {
-        Intent volunteerIntent = new Intent(CreateAccount.this, GetSelfieActivity.class);
+        Intent volunteerIntent = new Intent(CreateAccount.this, PermissionActivity.class);
         startActivity(volunteerIntent);
     }
 
