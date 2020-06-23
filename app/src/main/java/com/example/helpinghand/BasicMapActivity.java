@@ -1,11 +1,22 @@
 package com.example.helpinghand;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -17,7 +28,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,47 +40,25 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethod;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BasicMapActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
+
+public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -83,17 +71,7 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
     private MaterialSearchBar materialSearchBar;
     private View mapView;
 
-    private Button btnMakeRequest;
-
-    private final float DEFAULT_ZOOM = 18;
-
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-
-    private Boolean mLocationPermissionGranted = false;
-
-    private DrawerLayout drawer;
+    private final float DEFAULT_ZOOM = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +79,17 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_basic_map);
 
         materialSearchBar = findViewById(R.id.searchBar);
-        btnMakeRequest = findViewById(R.id.requestBtnID);
+        Button btnFind = findViewById(R.id.btn_find);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.basic_map);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
         mapView = mapFragment.getView();
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        Places.initialize(BasicMapActivity.this, "AIzaSyBb6JbacdsLAEYmr4hdttXKSKOe606dNq4");
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(BasicMapActivity.this);
+        Places.initialize(BasicMapActivity.this, getString(R.string.google_maps_api));
         placesClient = Places.createClient(this);
         final AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
 
@@ -126,20 +107,8 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onButtonClicked(int buttonCode) {
                 if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
-                    Toolbar toolbar = findViewById(R.id.toolbar);
-                    setSupportActionBar(toolbar);
 
-                    drawer = findViewById(R.id.drawer_layout);
-                    NavigationView navigationView = findViewById(R.id.nav_view);
-                    navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) BasicMapActivity.this);
-
-                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(BasicMapActivity.this, drawer, toolbar,
-                            R.string.navigation_draw_open, R.string.navigation_draw_close);
-
-                    drawer.addDrawerListener(toggle);
-                    toggle.syncState();
-                }
-                else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
+                } else if (buttonCode == MaterialSearchBar.BUTTON_BACK) {
                     materialSearchBar.closeSearch();
                 }
             }
@@ -147,37 +116,35 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
 
         materialSearchBar.addTextChangeListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                final FindAutocompletePredictionsRequest predictionsRequest = FindAutocompletePredictionsRequest.builder()
-                        .setCountry("za")
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                FindAutocompletePredictionsRequest predictionsRequest = FindAutocompletePredictionsRequest.builder()
                         .setTypeFilter(TypeFilter.ADDRESS)
                         .setSessionToken(token)
-                        .setQuery(charSequence.toString())
+                        .setQuery(s.toString())
                         .build();
                 placesClient.findAutocompletePredictions(predictionsRequest).addOnCompleteListener(new OnCompleteListener<FindAutocompletePredictionsResponse>() {
                     @Override
                     public void onComplete(@NonNull Task<FindAutocompletePredictionsResponse> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             FindAutocompletePredictionsResponse predictionsResponse = task.getResult();
-                            if(predictionsResponse != null){
+                            if (predictionsResponse != null) {
                                 predictionList = predictionsResponse.getAutocompletePredictions();
                                 List<String> suggestionsList = new ArrayList<>();
-                                for(int i = 0; i<predictionList.size(); i++){
+                                for (int i = 0; i < predictionList.size(); i++) {
                                     AutocompletePrediction prediction = predictionList.get(i);
                                     suggestionsList.add(prediction.getFullText(null).toString());
                                 }
                                 materialSearchBar.updateLastSuggestions(suggestionsList);
-                                if(!materialSearchBar.isSuggestionsVisible()){
+                                if (!materialSearchBar.isSuggestionsVisible()) {
                                     materialSearchBar.showSuggestionsList();
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             Log.i("mytag", "prediction fetching task unsuccessful");
                         }
                     }
@@ -185,14 +152,15 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(Editable s) {
 
             }
         });
+
         materialSearchBar.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
             @Override
             public void OnItemClickListener(int position, View v) {
-                if(position >= predictionList.size()){
+                if (position >= predictionList.size()) {
                     return;
                 }
                 AutocompletePrediction selectedPrediction = predictionList.get(position);
@@ -205,13 +173,10 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
                         materialSearchBar.clearSuggestions();
                     }
                 }, 1000);
-
-
-                InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                if(imm != null){
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
                     imm.hideSoftInputFromWindow(materialSearchBar.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-                }
-                String placeId = selectedPrediction.getPlaceId();
+                final String placeId = selectedPrediction.getPlaceId();
                 List<Place.Field> placeFields = Arrays.asList(Place.Field.LAT_LNG);
 
                 FetchPlaceRequest fetchPlaceRequest = FetchPlaceRequest.builder(placeId, placeFields).build();
@@ -221,14 +186,14 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
                         Place place = fetchPlaceResponse.getPlace();
                         Log.i("mytag", "Place found: " + place.getName());
                         LatLng latLngOfPlace = place.getLatLng();
-                        if(latLngOfPlace != null){
+                        if (latLngOfPlace != null) {
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngOfPlace, DEFAULT_ZOOM));
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        if(e instanceof ApiException){
+                        if (e instanceof ApiException) {
                             ApiException apiException = (ApiException) e;
                             apiException.printStackTrace();
                             int statusCode = apiException.getStatusCode();
@@ -244,93 +209,32 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
 
             }
         });
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-                break;
-
-            case R.id.nav_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-                break;
-
-            case R.id.nav_requests:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestsFragment()).commit();
-                break;
-
-            case R.id.nav_messages:
-                //moveToMessageActivity();
-                break;
-
-            case R.id.nav_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_help:
-                Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START))
-        {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
-
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        mLocationPermissionGranted = false;
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionGranted = false;
-                            return;
-                        }
+        btnFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LatLng currentMarkerLocation = mMap.getCameraPosition().target;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(BasicMapActivity.this, MainActivity.class));
+                        finish();
                     }
-                    mLocationPermissionGranted = true;
-                }
+                }, 3000);
+
             }
-        }
+        });
+
     }
 
-    private void getLocationPermission() {
-        String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                mLocationPermissionGranted = true;
-            } else {
-                ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
-
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            getLocationPermission();
-            return;
-        }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        if (mapView != null & mapView.findViewById(Integer.parseInt("1")) != null) {
+        if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
             View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
@@ -338,7 +242,7 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
             layoutParams.setMargins(0, 0, 40, 180);
         }
 
-        //check if gps is enabled or not and then request the user to enable it
+        //check if gps is enabled or not and then request user to enable it
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(5000);
@@ -356,6 +260,7 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+
         task.addOnFailureListener(BasicMapActivity.this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -363,8 +268,8 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
                     ResolvableApiException resolvable = (ResolvableApiException) e;
                     try {
                         resolvable.startResolutionForResult(BasicMapActivity.this, 51);
-                    } catch (IntentSender.SendIntentException ex) {
-                        ex.printStackTrace();
+                    } catch (IntentSender.SendIntentException e1) {
+                        e1.printStackTrace();
                     }
                 }
             }
@@ -383,7 +288,7 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 51) {
             if (resultCode == RESULT_OK) {
@@ -392,52 +297,40 @@ public class BasicMapActivity extends AppCompatActivity implements NavigationVie
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void getDeviceLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            getLocationPermission();
-            return;
-        }
-        mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful()) {
-                    mLastKnownLocation = task.getResult();
-                    if (mLastKnownLocation != null) {
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                    }
-                    else {
-                        final LocationRequest locationRequest = LocationRequest.create();
-                        locationRequest.setInterval(10000);
-                        locationRequest.setFastestInterval(5000);
-                        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                        locationCallback = new LocationCallback() {
-                            @Override
-                            public void onLocationResult(LocationResult locationResult) {
-                                super.onLocationResult(locationResult);
-                                if (locationResult == null) {
-                                    return;
-                                }
-                                mLastKnownLocation = locationResult.getLastLocation();
+        mFusedLocationProviderClient.getLastLocation()
+                .addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            mLastKnownLocation = task.getResult();
+                            if (mLastKnownLocation != null) {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                                mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+                            } else {
+                                final LocationRequest locationRequest = LocationRequest.create();
+                                locationRequest.setInterval(10000);
+                                locationRequest.setFastestInterval(5000);
+                                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                                locationCallback = new LocationCallback() {
+                                    @Override
+                                    public void onLocationResult(LocationResult locationResult) {
+                                        super.onLocationResult(locationResult);
+                                        if (locationResult == null) {
+                                            return;
+                                        }
+                                        mLastKnownLocation = locationResult.getLastLocation();
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                                        mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+                                    }
+                                };
+                                mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+
                             }
-                        };
-                        if (ActivityCompat.checkSelfPermission(BasicMapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                                && ActivityCompat.checkSelfPermission(BasicMapActivity
-                        .this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            getLocationPermission();
-                            return;
+                        } else {
+                            Toast.makeText(BasicMapActivity.this, "unable to get last location", Toast.LENGTH_SHORT).show();
                         }
-                        mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
                     }
-                }else{
-                    Toast.makeText(BasicMapActivity.this, "unable to get last location", Toast.LENGTH_SHORT);
-                }
-            }
-        });
-    }
-
-    public void doMakeRequest(View view){
-
+                });
     }
 }
