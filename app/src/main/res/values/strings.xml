@@ -72,5 +72,15 @@
     <string name="new_request_home_icon">New Request</string>
     <string name="settings_home_icon">Settings</string>
     <string name="favourites_home_icon">Favourites</string>
+    <string name="logout_home_page">Logout</string>
+    <string name="home_page_personal_details">Personal Details</string>
+    <string name="personal_icon_home_page">Personal Icon</string>
+    <string name="new_request_image_home_page">New Request image</string>
+    <string name="location_update_image">Location Update Image</string>
+    <string name="messages_image">Messages Image</string>
+    <string name="personal_details_image">Personal Details Image</string>
+    <string name="settings_image">Settings Image</string>
+    <string name="settings_image1">Settings Image</string>
+    <string name="new_requests_home_page">New Requests</string>
 
 </resources>

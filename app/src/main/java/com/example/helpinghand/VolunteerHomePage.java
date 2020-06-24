@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
-public class VolunteerHomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class VolunteerHomePage extends AppCompatActivity implements View.OnClickListener {
 
     int ID;
     String name;
@@ -28,7 +30,9 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
     String surname;
     String contact;
 
-    private DrawerLayout drawer;
+  //  private DrawerLayout drawer;
+   private CardView NewRequestCard, LocationUpdateCard, MessagesCard, PersonalDetailsCard, SettingsCard, LogoutCard;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,27 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
 
         String json = getIntent().getStringExtra("JSON");
         JSONdata(json);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        //defining cards
+        NewRequestCard = findViewById(R.id.AcceptRequestCard);
+        LocationUpdateCard = findViewById(R.id.UpdateLocationCardVolunteer);
+        MessagesCard = findViewById(R.id.MessagesCardVolunteer);
+        PersonalDetailsCard = findViewById(R.id.PersonalDetailsCardVolunteer);
+        SettingsCard = findViewById(R.id.SettingsCardVolunteer);
+        LogoutCard = findViewById(R.id.LogoutCardVolunteer);
+
+        //adding click listeners to the cards
+        NewRequestCard.setOnClickListener(this);
+        LocationUpdateCard.setOnClickListener(this);
+        MessagesCard.setOnClickListener(this);
+        PersonalDetailsCard.setOnClickListener(this);
+        SettingsCard.setOnClickListener(this);
+        LogoutCard.setOnClickListener(this);
+      //Toolbar toolbar = findViewById(R.id.toolbar);
+      //setSupportActionBar(toolbar);
+
+
+    /* unneeded
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -54,18 +76,34 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+     */
     }
 
-    public void moveToMessageActivity(MenuItem item){
+    public void moveToMessageActivity(){
         Intent i = new Intent(VolunteerHomePage.this, MessagingActivity.class);
         startActivity(i);
     }
 
-    public void volunteerToRequestActivity(MenuItem item) {
+    public void volunteerToRequestActivity() {
         Intent i = new Intent(VolunteerHomePage.this, VolunteerRequestActivity.class);
         startActivity(i);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.AcceptRequestCard:
+                volunteerToRequestActivity();
+                break;
+
+            case R.id.MessagesCardVolunteer:
+                moveToMessageActivity();
+        }
+    }
+
+
+
+    /* unneeded
     @Override
       public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -109,6 +147,7 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
             super.onBackPressed();
         }
     }
+     */
 
 
 
