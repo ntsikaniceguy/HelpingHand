@@ -56,8 +56,13 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
         }
     }
 
-    public void moveToMessageActivity(){
-        Intent i = new Intent(this, MessagingActivity.class);
+    public void moveToMessageActivity(MenuItem item){
+        Intent i = new Intent(VolunteerHomePage.this, MessagingActivity.class);
+        startActivity(i);
+    }
+
+    public void volunteerToRequestActivity(MenuItem item) {
+        Intent i = new Intent(VolunteerHomePage.this, VolunteerRequestActivity.class);
         startActivity(i);
     }
 
@@ -73,11 +78,11 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
                 break;
 
             case R.id.nav_requests:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestsFragment()).commit();
+                volunteerToRequestActivity(item);
                 break;
 
             case R.id.nav_messages:
-                moveToMessageActivity();
+                moveToMessageActivity(item);
                 break;
 
             case R.id.nav_share:
@@ -126,4 +131,5 @@ public class VolunteerHomePage extends AppCompatActivity implements NavigationVi
             e.printStackTrace();
         }
     }
+
 }

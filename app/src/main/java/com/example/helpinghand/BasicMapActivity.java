@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -58,6 +57,7 @@ import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -182,7 +182,7 @@ public class BasicMapActivity extends AppCompatActivity implements OnMapReadyCal
                 if (imm != null)
                     imm.hideSoftInputFromWindow(materialSearchBar.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                 final String placeId = selectedPrediction.getPlaceId();
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.LAT_LNG);
+                List<Place.Field> placeFields = Collections.singletonList(Place.Field.LAT_LNG);
 
                 FetchPlaceRequest fetchPlaceRequest = FetchPlaceRequest.builder(placeId, placeFields).build();
                 placesClient.fetchPlace(fetchPlaceRequest).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {

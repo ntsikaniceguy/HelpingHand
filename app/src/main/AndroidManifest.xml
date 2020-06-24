@@ -19,38 +19,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".VolunteerRequestActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBb6JbacdsLAEYmr4hdttXKSKOe606dNq4" />
 
-        <activity android:name=".PermissionActivity">
-
-        </activity>
+        <activity android:name=".PermissionActivity"></activity>
         <activity
             android:name=".BasicMapActivity"
             android:label="@string/title_activity_basic_map"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".MessagingActivity" />
         <activity android:name=".GetSelfieActivity" />
         <activity
             android:name=".VolunteerHomePage"
-            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PatientHomePage"
-            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".CreateAccount" />
+        <activity
+            android:name=".LoginActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".CreateAccount"
+            android:noHistory="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

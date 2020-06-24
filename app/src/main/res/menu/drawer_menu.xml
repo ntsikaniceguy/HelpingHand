@@ -16,11 +16,15 @@
         <item
             android:id="@+id/nav_messages"
             android:icon="@drawable/ic_messages"
-            android:title="@string/messages_nav_bar" />
+            android:title="@string/messages_nav_bar"/>
+           <!-- android:onClick="moveToMessageActivity"-->
+
         <item
             android:id="@+id/nav_requests"
             android:icon="@drawable/ic_requests"
-            android:title="@string/requests_nav_bar" />
+            android:title="@string/requests_nav_bar"/>
+            <!-- android:onClick="volunteerToRequestActivity"-->
+
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
