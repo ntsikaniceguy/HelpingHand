@@ -78,6 +78,7 @@
                         android:background="@color/quantum_grey200"
                         android:gravity="center"
                         android:orientation="vertical"
+                        android:onClick=""
                         android:padding="16dp">
 
                         <ImageView

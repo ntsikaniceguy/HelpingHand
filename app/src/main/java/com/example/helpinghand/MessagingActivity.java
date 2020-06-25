@@ -31,6 +31,8 @@ public class MessagingActivity extends AppCompatActivity {
 
     String userID;
     String clientID;
+    String type = "P";
+
     int nextCheck = 10000;
 
     private MessageAdapter adapter = new MessageAdapter();
@@ -68,6 +70,7 @@ public class MessagingActivity extends AppCompatActivity {
 
             urlbuilder.addQueryParameter("UserID",userID);
             urlbuilder.addQueryParameter("ClientID",clientID);
+            urlbuilder.addQueryParameter("type",type);
 
             String queryurl = urlbuilder.build().toString();
             final Request request = new Request.Builder().url(queryurl).build();

@@ -24,14 +24,14 @@ import org.w3c.dom.Text;
 
 public class VolunteerHomePage extends AppCompatActivity implements View.OnClickListener {
 
-    int ID;
+    String ID;
     String name;
     String email;
     String surname;
     String contact;
-
-  //  private DrawerLayout drawer;
-   private CardView NewRequestCard, LocationUpdateCard, MessagesCard, PersonalDetailsCard, SettingsCard, LogoutCard;
+    String json;
+    //  private DrawerLayout drawer;
+    private CardView NewRequestCard, LocationUpdateCard, MessagesCard, PersonalDetailsCard, SettingsCard, LogoutCard;
 
 
     @Override
@@ -39,7 +39,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_home_page);
 
-        String json = getIntent().getStringExtra("JSON");
+        json = getIntent().getStringExtra("JSON");
         JSONdata(json);
 
         //defining cards
@@ -57,8 +57,8 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         PersonalDetailsCard.setOnClickListener(this);
         SettingsCard.setOnClickListener(this);
         LogoutCard.setOnClickListener(this);
-      //Toolbar toolbar = findViewById(R.id.toolbar);
-      //setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
 
     /* unneeded
@@ -85,7 +85,8 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
     }
 
     public void volunteerToRequestActivity() {
-        Intent i = new Intent(VolunteerHomePage.this, VolunteerRequestActivity.class);
+        Intent i = new Intent(VolunteerHomePage.this,VolunteerRequestActivity.class);
+        i.putExtra("userdata",json);
         startActivity(i);
     }
 
@@ -101,7 +102,14 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (false) {
+            super.onBackPressed();
+        } else {
+            //disables back
+        }
+    }
 
     /* unneeded
     @Override
@@ -151,14 +159,13 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
 
 
 
-    void JSONdata(String json)
+    void JSONdata(String data)
     {
         try
         {
-            JSONArray ja = new JSONArray(json);
-            JSONObject item = ja.getJSONObject(0);
+            JSONObject item = new JSONObject(data);
 
-            ID = item.getInt("VOLUNTEER_ID");
+            ID = item.getString("VOLUNTEER_ID");
             name = item.getString("VOLUNTEER_NAME");
             email = item.getString("VOLUNTEER_EMAIL");
             surname = item.getString("VOLUNTEER_SURNAME");
