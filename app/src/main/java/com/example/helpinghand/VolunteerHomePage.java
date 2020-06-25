@@ -85,7 +85,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
     }
 
     public void volunteerToRequestActivity() {
-        Intent i = new Intent(VolunteerHomePage.this,VolunteerRequestActivity.class);
+        Intent i = new Intent(VolunteerHomePage.this,VolunteerAcceptRequest.class);
         i.putExtra("userdata",json);
         startActivity(i);
     }

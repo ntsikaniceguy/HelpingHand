@@ -40,7 +40,6 @@
         <activity
             android:name=".MapsActivityCurrentPlace"
             android:label="@string/title_activity_maps_current_place"></activity>
-        <activity android:name=".VolunteerRequestActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -52,7 +51,6 @@
             android:label="@string/title_activity_basic_map"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MessagingActivity" />
-        <activity android:name=".GetSelfieActivity" />
         <activity
             android:name=".VolunteerHomePage"
             android:theme="@style/AppTheme.NoActionBar" />
