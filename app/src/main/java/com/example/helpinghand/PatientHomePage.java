@@ -30,6 +30,7 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
     String email;
     String surname;
     String contact;
+    String json;
     private TextView NameView;
 
     private DrawerLayout drawer;
@@ -43,7 +44,7 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_home_page);
-        String json = getIntent().getStringExtra("JSON");
+        json = getIntent().getStringExtra("JSON");
         JSONdata(json);
 
         NameView = findViewById(R.id.nameView);
@@ -79,11 +80,19 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    void patientHomeToRequest()
+    {
+        Intent i = new Intent(PatientHomePage.this,PatientCreateRequest.class);
+        i.putExtra("data",json);
+        startActivity(i);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.NewRequestCard:
-                getSupportFragmentManager().beginTransaction().replace(R.id.grid_layout, new RequestsFragment());
+                //getSupportFragmentManager().beginTransaction().replace(R.id.grid_layout, new RequestsFragment());
+                patientHomeToRequest();
                 break;
 
             case R.id.UpdateLocationCard:
