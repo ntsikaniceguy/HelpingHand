@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class TestingVolunteer extends AppCompatActivity {
+public class TestingPatient extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volunteer_accept_request);
+        setContentView(R.layout.patient_new_request);
     }
-
 }

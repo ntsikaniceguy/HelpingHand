@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.util.List;
+
 public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
@@ -32,12 +34,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     //Entry point to the Fused Location Provider
     private FusedLocationProviderClient fusedLocationProviderClient;
 
-    // A default location (Sydney, Australia) and default zoom to use when location permission is
-    // not granted.
-    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean locationPermissionGranted;
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
@@ -49,6 +46,12 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private static final String KEY_LOCATION = "location";
     // [END maps_current_place_state_keys]
 
+    // Used for selecting the current place.
+    private static final int M_MAX_ENTRIES = 5;
+    private String[] likelyPlaceNames;
+    private String[] likelyPlaceAddresses;
+    private List[] likelyPlaceAttributions;
+    private LatLng[] likelyPlaceLatLngs;
 
 
     @Override
