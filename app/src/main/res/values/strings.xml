@@ -82,5 +82,6 @@
     <string name="settings_image">Settings Image</string>
     <string name="settings_image1">Settings Image</string>
     <string name="new_requests_home_page">New Requests</string>
+    <string name="title_activity_maps_current_place">Map</string>
 
 </resources>

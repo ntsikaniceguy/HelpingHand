@@ -38,6 +38,7 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
     private CardView PersonalDetailsCard;
     private CardView SettingsCard;
     private CardView LogoutCard;
+    private CardView MessagesCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         //defining cards
         NewRequestCard = findViewById(R.id.NewRequestCard);
         LocationUpdateCard = findViewById(R.id.UpdateLocationCard);
-        CardView messagesCard = findViewById(R.id.MessagesCard);
+        MessagesCard = findViewById(R.id.MessagesCard);
         PersonalDetailsCard = findViewById(R.id.PersonalDetailsCard);
         SettingsCard = findViewById(R.id.SettingsCard);
         LogoutCard = findViewById(R.id.LogoutCard);
@@ -60,7 +61,7 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         //adding click listeners to the cards
         NewRequestCard.setOnClickListener(this);
         LocationUpdateCard.setOnClickListener(this);
-        messagesCard.setOnClickListener(this);
+        MessagesCard.setOnClickListener(this);
         PersonalDetailsCard.setOnClickListener(this);
         SettingsCard.setOnClickListener(this);
         LogoutCard.setOnClickListener(this);
@@ -160,7 +161,6 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
             email = item.getString("PATIENT_EMAIL");
             surname = item.getString("PATIENT_SURNAME");
             contact = item.getString("PATIENT_CONTACT");
-
         }
         catch (JSONException e)
         {
