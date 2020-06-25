@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class VolunteerRequestActivity extends AppCompatActivity {
+public class TestingVolunteer extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volunteer_request);
+        setContentView(R.layout.activity_testing_volunteer);
     }
 }

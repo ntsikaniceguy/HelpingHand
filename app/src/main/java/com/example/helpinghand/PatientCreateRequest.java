@@ -31,7 +31,6 @@ public class PatientCreateRequest extends AppCompatActivity {
         ListView orderitems = (ListView)findViewById(R.id.patlist);
         orderitems.setAdapter(adapter);
         getInfo();
-
     }
 
     void getInfo()
