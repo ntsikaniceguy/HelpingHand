@@ -28,8 +28,9 @@ import okhttp3.Response;
 
 public class VolunteerAcceptRequest extends AppCompatActivity {
 
-    String userID = "";
-    String userEmail = "";
+    String userID;
+    String userEmail;
+    String json;
 
     ListView orderbox;
     private orders adapter = new orders();
@@ -40,7 +41,9 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
         setContentView(R.layout.activity_volunteer_accept_request);
         orderbox = (ListView)findViewById(R.id.orderBox);
         orderbox.setAdapter(adapter);
+        json = getIntent().getStringExtra("userdata");
         getItems();
+        getUserInfo(json);
 
         orderbox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,15 +64,23 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
         });
     }
 
-    public void getUserInfo()
+    public void getUserInfo(String data)
     {
-        //get user Id and email;
+        try
+        {
+            JSONObject item = new JSONObject(data);
+            userID = item.getString("VOLUNTEER_ID");
+            userEmail  = item.getString("VOLUNTEER_EMAIL");
 
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void moveToNext(JSONObject data)
     {
-        //move to next intent and update table
+
     }
 
 

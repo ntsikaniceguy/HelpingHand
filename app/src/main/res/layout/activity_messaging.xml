@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:text="Name"
         android:textSize="25dp"
-        android:background="#20B2AA"
+        android:background="@color/colorPrimary"
         android:textColor="#F0FFFF"
         android:id="@+id/edtName"
         android:textAlignment="center"

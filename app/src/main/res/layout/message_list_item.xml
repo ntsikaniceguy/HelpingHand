@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/msg_recieved"
         android:padding="4dp"
-        android:background="#20B2AA"
+        android:background="@color/colorPrimary"
         android:textColor="#F0FFFF"
         android:layout_marginRight="64dp"/>
 
@@ -21,5 +21,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="64dp"
         android:background="#F0FFFF"
-        android:textColor="#20B2AA"/>
+        android:textColor="@color/colorPrimary"/>
 </RelativeLayout>
