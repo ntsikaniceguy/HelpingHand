@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void LoginToVolunteer(String json)
     {
-        Intent volunteerHomePageIntent = new Intent(this, BasicMapActivity.class);
+        Intent volunteerHomePageIntent = new Intent(this, VolunteerHomePage.class);
         volunteerHomePageIntent.putExtra("JSON", json);
         startActivity(volunteerHomePageIntent);
     }

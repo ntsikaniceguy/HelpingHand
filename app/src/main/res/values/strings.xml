@@ -63,5 +63,24 @@
     <string name="todo_nav_header">TODO</string>
     <string name="helping_hand_nav_header">Helping Hand</string>
     <string name="info_helpinghand_co_za_nav_header">info@HelpingHand.co.za</string>
+    <string name="todo_activity_patient_home_page">TODO</string>
+    <string name="dashboard_patient_home_page">Dashboard</string>
+    <string name="items_patient_home_page">Items</string>
+    <string name="favourites_home_page_icon">Favourites</string>
+    <string name="location_update">Location Update</string>
+    <string name="messages_home_icon">Messages</string>
+    <string name="new_request_home_icon">New Request</string>
+    <string name="settings_home_icon">Settings</string>
+    <string name="favourites_home_icon">Favourites</string>
+    <string name="logout_home_page">Logout</string>
+    <string name="home_page_personal_details">Personal Details</string>
+    <string name="personal_icon_home_page">Personal Icon</string>
+    <string name="new_request_image_home_page">New Request image</string>
+    <string name="location_update_image">Location Update Image</string>
+    <string name="messages_image">Messages Image</string>
+    <string name="personal_details_image">Personal Details Image</string>
+    <string name="settings_image">Settings Image</string>
+    <string name="settings_image1">Settings Image</string>
+    <string name="new_requests_home_page">New Requests</string>
 
 </resources>
