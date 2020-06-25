@@ -13,6 +13,7 @@
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="25dp"
+        android:padding="4dp"
         android:onClick="PRAdd"/>
 
     <TextView
@@ -24,10 +25,12 @@
         android:layout_toRightOf="@id/btnpatAdd"
         android:text="Proceed"
         android:textAlignment="center"
+        android:padding="4dp"
         android:textColor="@color/colorPrimary"
+        android:onClick="CompleteOrder"
         android:textSize="25dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/edtpatNameItem"
         android:layout_width="255dp"
         android:layout_height="wrap_content"
@@ -36,13 +39,14 @@
         android:hint="Enter name of item"
         android:textSize="20dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/edtpatQuantity"
         android:layout_width="154dp"
         android:layout_height="wrap_content"
         android:layout_above="@id/btnpatProceed"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/edtpatNameItem"
+        android:inputType="number"
         android:hint="# of items"
         android:textSize="20dp" />
 

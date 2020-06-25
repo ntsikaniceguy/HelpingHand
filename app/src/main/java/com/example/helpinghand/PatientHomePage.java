@@ -112,6 +112,8 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+
+
     /* @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
