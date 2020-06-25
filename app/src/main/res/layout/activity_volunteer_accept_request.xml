@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Who do you want to help today?"
+        android:text="@string/who_do_you_want_to_help_today"
         android:textAlignment="center"
         android:id="@+id/editTop"
         android:layout_alignParentTop="true"

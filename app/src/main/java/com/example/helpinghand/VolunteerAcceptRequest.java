@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,7 +40,7 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_accept_request);
-        orderbox = (ListView)findViewById(R.id.orderBox);
+        orderbox = findViewById(R.id.orderBox);
         orderbox.setAdapter(adapter);
         json = getIntent().getStringExtra("userdata");
         getItems();
@@ -54,7 +55,7 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
                 try
                 {
                     JSONObject data = new JSONObject(item);
-                    moveToNext(data);
+                   // moveToNext(data);
                 }
                 catch (JSONException e)
                 {
@@ -78,17 +79,15 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
         }
     }
 
-    public void moveToNext(JSONObject data)
-    {
+    public void moveToNext(JSONObject data){
 
     }
-
 
     void getItems()
     {
         OkHttpClient client = new OkHttpClient();
         String url  = "https://lamp.ms.wits.ac.za/home/s2241186/pendingOrder.php";
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         String queryurl = urlBuilder.build().toString();
         Request request = new Request.Builder().url(queryurl).build();
 
@@ -99,11 +98,10 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
-            {
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
                 if(response.isSuccessful())
                 {
-                    final String result = response.body().toString();
+                    final String result = Objects.requireNonNull(response.body()).toString();
 
                     VolunteerAcceptRequest.this.runOnUiThread(new Runnable() {
                         @Override
@@ -139,9 +137,6 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
         }
     }
 
-
-
-
     public class orders extends BaseAdapter
     {
         List<JSONObject> items = new ArrayList<>();
@@ -168,20 +163,20 @@ public class VolunteerAcceptRequest extends AppCompatActivity {
             {
                 getLayoutInflater().inflate(R.layout.item_volunteer_accept,parent,false);
             }
+            else{
+                TextView email = view.findViewById(R.id.itemedtemail);
+                JSONObject item = items.get(i);
 
-            TextView email = view.findViewById(R.id.itemedtemail);
-            JSONObject item = items.get(i);
-
-            try
-            {
-                email.setText(item.getString("PATIENT_EMAIL"));
-                email.setVisibility(View.VISIBLE);
+                try
+                {
+                    email.setText(item.getString("PATIENT_EMAIL"));
+                    email.setVisibility(View.VISIBLE);
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
             }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-
 
             return view;
         }

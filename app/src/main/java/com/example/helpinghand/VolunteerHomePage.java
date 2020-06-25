@@ -60,23 +60,6 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-
-    /* unneeded
-        drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_draw_open, R.string.navigation_draw_close);
-
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
-     */
     }
 
     public void moveToMessageActivity(){
@@ -85,7 +68,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
     }
 
     public void volunteerToRequestActivity() {
-        Intent i = new Intent(VolunteerHomePage.this,VolunteerAcceptRequest.class);
+        Intent i = new Intent(VolunteerHomePage.this,TestingVolunteer.class);
         i.putExtra("userdata",json);
         startActivity(i);
     }
@@ -99,6 +82,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
 
             case R.id.MessagesCardVolunteer:
                 moveToMessageActivity();
+                break;
         }
     }
 
@@ -110,54 +94,6 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
             //disables back
         }
     }
-
-    /* unneeded
-    @Override
-      public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-                break;
-
-            case R.id.nav_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-                break;
-
-            case R.id.nav_requests:
-                volunteerToRequestActivity(item);
-                break;
-
-            case R.id.nav_messages:
-                moveToMessageActivity(item);
-                break;
-
-            case R.id.nav_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_help:
-                Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START))
-        {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
-     */
-
-
 
     void JSONdata(String data)
     {
