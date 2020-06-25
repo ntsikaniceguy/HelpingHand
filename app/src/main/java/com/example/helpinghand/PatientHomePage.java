@@ -83,7 +83,7 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
 
     void patientHomeToRequest()
     {
-        Intent i = new Intent(PatientHomePage.this,PatientCreateRequest.class);
+        Intent i = new Intent(PatientHomePage.this,TestingPatient.class);
         i.putExtra("data",json);
         startActivity(i);
     }
@@ -104,6 +104,8 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
+
+
 
     /* @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

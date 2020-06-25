@@ -11,6 +11,7 @@
         android:textAlignment="center"
         android:id="@+id/editTop"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:gravity="center_horizontal" />
 
     <ListView
@@ -18,6 +19,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/orderBox"
         android:padding="10dp"
-        android:layout_below="@id/editTop"/>
+        android:layout_below="@id/editTop"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
