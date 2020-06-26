@@ -12,7 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MapsActivityCurrentPlace"
-        tools:layout="@layout/activity_maps_current_place" />
+        tools:layout="@layout/activity_maps_current_place" >
+
+        <Button
+            android:id="@+id/btnSetLocation"
+            android:layout_width="4dp"
+            android:layout_height="15dp"
+            android:layout_gravity="bottom|center"
+            android:color="@drawable/app_theme_background_colour"
+            android:text="@string/set_location_button" />
+    </androidx.fragment.app.FragmentContainerView>
 
     <RelativeLayout
         android:padding="10dp"
@@ -35,14 +44,6 @@
 
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/btnSetLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:text="@string/set_location_button"
-        android:color="@drawable/app_theme_background_colour"/>
 
 </FrameLayout>
 

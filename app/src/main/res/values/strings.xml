@@ -89,4 +89,7 @@
     <string name="default_info_snippet">No places found, because location permission is disabled.</string>
     <string name="pick_place">Choose a place</string>
     <string name="set_location_button">Set Location</string>
+    <string name="tap_here_to_send_a_message_nto_your_volunteer">Tap here to send a message \nto your volunteer</string>
+    <string name="proceed_to_delivery">Proceed to Delivery</string>
+    <string name="volunteer_to_messages_button">Messages</string>
 </resources>
