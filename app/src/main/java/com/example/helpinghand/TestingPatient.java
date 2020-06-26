@@ -151,6 +151,10 @@ public class TestingPatient extends AppCompatActivity {
                             {
                                 moveToViewOrder();
                             }
+                            else if(result.equalsIgnoreCase("exists"))
+                            {
+                                Toast.makeText(TestingPatient.this,"An order can only be placed once a day",Toast.LENGTH_SHORT).show();
+                            }
                             else
                             {
                                 Toast.makeText(TestingPatient.this,"error adding order",Toast.LENGTH_SHORT).show();
