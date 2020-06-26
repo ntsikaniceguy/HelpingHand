@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,9 +33,11 @@ public class TestingVolunteer extends AppCompatActivity {
     String userID;
     String userEmail;
     String json;
-
     ListView orderbox;
-    private orders adapter = new orders();
+    JSONArray ja;
+    ArrayList<String> orders = new ArrayList<>();
+
+    //private orders adapter = new orders();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,19 @@ public class TestingVolunteer extends AppCompatActivity {
         setContentView(R.layout.activity_volunteer_accept_request);
 
         orderbox = (ListView)findViewById(R.id.orderBox);
-        orderbox.setAdapter(adapter);
+        //orderbox.setAdapter(adapter);
         json = getIntent().getStringExtra("userdata");
         getItems();
         getUserInfo(json);
 
         orderbox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(TestingVolunteer.this,"selected item",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+       /* orderbox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id)
             {
@@ -64,7 +74,7 @@ public class TestingVolunteer extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
     }
 
     public void getUserInfo(String data)
@@ -121,7 +131,7 @@ public class TestingVolunteer extends AppCompatActivity {
 
     void AddtoList(String data)
     {
-        try
+        /*try
         {
             JSONArray ja = new JSONArray(data);
 
@@ -139,12 +149,31 @@ public class TestingVolunteer extends AppCompatActivity {
         catch (JSONException e)
         {
             e.printStackTrace();
+        }*/
+
+        try
+        {
+            ja = new JSONArray(data);
+
+            for(int i = 0;i<ja.length();i++)
+            {
+                JSONObject item = ja.getJSONObject(i);
+                String semail = item.getString("PATIENT_EMAIL");
+                orders.add(semail);
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,orders);
+            orderbox.setAdapter(adapter);
+
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
         }
     }
 
 
 
-    public class orders extends BaseAdapter {
+   /* public class orders extends BaseAdapter {
         List<JSONObject> items = new ArrayList<>();
 
         @Override
@@ -191,5 +220,5 @@ public class TestingVolunteer extends AppCompatActivity {
             notifyDataSetChanged();
         }
 
-    }
+    }*/
 }
