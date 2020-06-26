@@ -56,25 +56,6 @@ public class TestingVolunteer extends AppCompatActivity {
                 Toast.makeText(TestingVolunteer.this,"selected item",Toast.LENGTH_SHORT).show();
             }
         });
-
-       /* orderbox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long id)
-            {
-                String item = adapter.getItem(i).toString();
-
-                try
-                {
-                    JSONObject data = new JSONObject(item);
-                    //moveToNext(data);
-                    Toast.makeText(TestingVolunteer.this,"works",Toast.LENGTH_SHORT).show();
-                }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });*/
     }
 
     public void getUserInfo(String data)
