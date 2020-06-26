@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ListView
+        android:id="@+id/patlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/MessagesBtn"
+        android:layout_width="234dp"
+        android:layout_height="119dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:text="@string/volunteer_to_messages_button" />
+
+    <Button
+        android:id="@+id/DeliveryBtn"
+        android:layout_width="234dp"
+        android:layout_height="119dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="0dp"
+        android:text="@string/proceed_to_delivery" />
+
+
+</RelativeLayout>

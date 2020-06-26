@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestingPatient"></activity>
+        <activity android:name=".VolunteerAcceptOrder"></activity>
+        <activity android:name=".PatientProcessOrder" />
+        <activity android:name=".TestingPatient" />
         <activity android:name=".TestingVolunteer" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

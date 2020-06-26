@@ -84,5 +84,12 @@
     <string name="new_requests_home_page">New Requests</string>
     <string name="title_activity_maps_current_place">Map</string>
     <string name="who_do_you_want_to_help_today">Who do you want to help today?</string>
-
+    <string name="option_get_place">Option get place</string>
+    <string name="default_info_title">Default Location</string>
+    <string name="default_info_snippet">No places found, because location permission is disabled.</string>
+    <string name="pick_place">Choose a place</string>
+    <string name="set_location_button">Set Location</string>
+    <string name="tap_here_to_send_a_message_nto_your_volunteer">Tap here to send a message \nto your volunteer</string>
+    <string name="proceed_to_delivery">Proceed to Delivery</string>
+    <string name="volunteer_to_messages_button">Messages</string>
 </resources>

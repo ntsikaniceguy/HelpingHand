@@ -88,6 +88,11 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         startActivity(i);
     }
 
+    void patientToMapsActivity(){
+        Intent i = new Intent(PatientHomePage.this, MapsActivityCurrentPlace.class);
+        startActivity(i);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -97,11 +102,13 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.UpdateLocationCard:
+                patientToMapsActivity();
                 break;
 
             case R.id.MessagesCard:
                 moveToMessageActivity();
                 break;
+
         }
     }
 
