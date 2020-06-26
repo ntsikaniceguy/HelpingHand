@@ -1,7 +1,9 @@
 package com.example.helpinghand;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +35,10 @@ public class TestingVolunteer extends AppCompatActivity {
 
     String userID;
     String userEmail;
-    String json;
+    String json = "";
     ListView orderbox;
+    boolean success1;
+    boolean success2;
     JSONArray ja;
     ArrayList<String> orders = new ArrayList<>();
 
@@ -44,57 +49,142 @@ public class TestingVolunteer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_accept_request);
 
+        userEmail = getIntent().getStringExtra("email");
+        userID = getIntent().getStringExtra("ID");
+
         orderbox = (ListView)findViewById(R.id.orderBox);
-        //orderbox.setAdapter(adapter);
         json = getIntent().getStringExtra("userdata");
         getItems();
-        getUserInfo(json);
+        getUserInfo();
 
         orderbox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(TestingVolunteer.this,"selected item",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-       /* orderbox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long id)
-            {
-                String item = adapter.getItem(i).toString();
-
                 try
                 {
-                    JSONObject data = new JSONObject(item);
-                    //moveToNext(data);
-                    Toast.makeText(TestingVolunteer.this,"works",Toast.LENGTH_SHORT).show();
-                }
-                catch (JSONException e)
+                    JSONObject item = ja.getJSONObject(position);
+                    moveToNext(item);
+
+                } catch (JSONException e)
                 {
                     e.printStackTrace();
                 }
             }
-        });*/
+        });
     }
 
-    public void getUserInfo(String data)
+    public void getUserInfo()
+    {
+        userID = getIntent().getStringExtra("email");
+        userEmail  = getIntent().getStringExtra("ID");
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void moveToNext(JSONObject data)
+    {
+        UpdateOrder(data);
+        CreateChat(data);
+
+        if(success1 == true && success2==true)
+        {
+            //move to next xml
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    void UpdateOrder(JSONObject data)
     {
         try
         {
-            JSONObject item = new JSONObject(data);
-            userID = item.getString("VOLUNTEER_ID");
-            userEmail  = item.getString("VOLUNTEER_EMAIL");
+            String clientEmail = data.getString("PATIENT_EMAIL");
+            String date =  LocalDate.now().toString();
 
-        } catch (JSONException e)
+            OkHttpClient client = new OkHttpClient();
+            String url  = "https://lamp.ms.wits.ac.za/home/s2241186/updateOrder.php";
+            HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+            urlBuilder.addQueryParameter("volEmail",userEmail);
+            urlBuilder.addQueryParameter("volID",userID);
+            urlBuilder.addQueryParameter("patEmail",clientEmail);
+            String queryurl = urlBuilder.build().toString();
+            Request request = new Request.Builder().url(queryurl).build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                    if(response.isSuccessful())
+                    {
+                        String result  = response.body().string();
+
+                        if(result.equalsIgnoreCase("error"))
+                        {
+                            success2 = false;
+                        }
+                        else
+                        {
+                            success2 = true;
+                        }
+                    }
+                }
+            });
+        }
+        catch (JSONException e)
         {
             e.printStackTrace();
         }
     }
 
-    public void moveToNext(JSONObject data)
+    void CreateChat(JSONObject data)
     {
+        try
+        {
+            String clientID = data.getString("PATIENT_ID");
+            OkHttpClient client = new OkHttpClient();
+            String url  = "https://lamp.ms.wits.ac.za/home/s2241186/createChat.php";
+            HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+            urlBuilder.addQueryParameter("volID",userID);
+            urlBuilder.addQueryParameter("patID",clientID);
+            String queryurl = urlBuilder.build().toString();
+            Request request = new Request.Builder().url(queryurl).build();
 
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                {
+                    if(response.isSuccessful())
+                    {
+                        String result = response.body().string();
+
+                        if(result.equalsIgnoreCase("error"))
+                        {
+                            success1 = false;
+                        }
+                        else
+                        {
+                            success1 = true;
+                        }
+                    }
+                }
+            });
+
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
+
 
     void getItems()
     {
@@ -131,25 +221,6 @@ public class TestingVolunteer extends AppCompatActivity {
 
     void AddtoList(String data)
     {
-        /*try
-        {
-            JSONArray ja = new JSONArray(data);
-
-            if(ja.length()!=0)
-            {
-                for(int i = 0;i<ja.length();i++)
-                {
-                    JSONObject item = ja.getJSONObject(i);
-                    adapter.addItem(item);
-                }
-
-                adapter.finalize();
-            }
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }*/
 
         try
         {
@@ -173,52 +244,5 @@ public class TestingVolunteer extends AppCompatActivity {
 
 
 
-   /* public class orders extends BaseAdapter {
-        List<JSONObject> items = new ArrayList<>();
 
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return items.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup parent) {
-            if (view == null) {
-                getLayoutInflater().inflate(R.layout.item_volunteer_accept, parent, false);
-            }
-
-            TextView email = view.findViewById(R.id.itemedtemail);
-            JSONObject item = items.get(i);
-
-            try {
-                email.setText(item.getString("PATIENT_EMAIL"));
-                email.setVisibility(View.VISIBLE);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            return view;
-        }
-
-        public void addItem(JSONObject item) {
-            items.add(item);
-        }
-
-        public void finalize()
-        {
-            notifyDataSetChanged();
-        }
-
-    }*/
 }
