@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,6 +37,8 @@ import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +80,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private LatLng[] likelyPlaceLatLngs;
 
     // [START maps_current_place_on_create]
+    private String destination;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,9 +111,34 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         // [START maps_current_place_map_fragment]
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.currentPlaceMap);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
         // [END maps_current_place_map_fragment]
         // [END_EXCLUDE]
+
+        // Specify the types of place data to return.
+        // Initialize the AutocompleteSupportFragment.
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+// Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+// Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+               // destination = place.getName().toString();
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
     }
     // [END maps_current_place_on_create]
 
@@ -128,6 +158,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     /**
      * Sets up the options menu.
+     *
      * @param menu The options menu.
      * @return Boolean.
      */
@@ -139,6 +170,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     /**
      * Handles a click on the menu option to get a place.
+     *
      * @param item The menu item to handle.
      * @return Boolean.
      */
@@ -235,7 +267,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                     }
                 });
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
@@ -306,10 +338,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
             // Get the likely places - that is, the businesses and other points of interest that
             // are the best match for the device's current location.
-            @SuppressWarnings("MissingPermission") final
-            Task<FindCurrentPlaceResponse> placeResult =
+            @SuppressWarnings("MissingPermission") final Task<FindCurrentPlaceResponse> placeResult =
                     placesClient.findCurrentPlace(request);
-            placeResult.addOnCompleteListener (new OnCompleteListener<FindCurrentPlaceResponse>() {
+            placeResult.addOnCompleteListener(new OnCompleteListener<FindCurrentPlaceResponse>() {
                 @Override
                 public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
                     if (task.isSuccessful() && task.getResult() != null) {
@@ -346,13 +377,13 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                         // Show a dialog offering the user the list of likely places, and add a
                         // marker at the selected place.
                         MapsActivityCurrentPlace.this.openPlacesDialog();
-                    }
-                    else {
+                    } else {
                         Log.e(TAG, "Exception: %s", task.getException());
                     }
                 }
             });
-        } else {
+        }
+        else {
             // The user has not granted permission.
             Log.i(TAG, "The user did not grant location permission.");
 
@@ -417,15 +448,15 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
-            } else {
+            }
+            else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
-
 }
