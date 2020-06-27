@@ -1,11 +1,5 @@
 package com.example.helpinghand;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -17,6 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -40,14 +39,17 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMapReadyCallback {
-
-    private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
+    private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap map;
+    private CameraPosition cameraPosition;
 
     // The entry point to the Places API.
     private PlacesClient placesClient;
@@ -80,8 +82,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private LatLng[] likelyPlaceLatLngs;
 
     // [START maps_current_place_on_create]
-    private String destination;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,13 +91,13 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            CameraPosition cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
         // [END maps_current_place_on_create_save_instance_state]
         // [END_EXCLUDE]
 
         // Retrieve the content view that renders the map.
-        setContentView(R.layout.activity_maps_current_place);
+        setContentView(R.layout.activity_maps);
 
         // [START_EXCLUDE silent]
         // Construct a PlacesClient
@@ -110,35 +110,39 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         // Build the map.
         // [START maps_current_place_map_fragment]
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.currentPlaceMap);
+                .findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         // [END maps_current_place_map_fragment]
         // [END_EXCLUDE]
 
-        // Specify the types of place data to return.
         // Initialize the AutocompleteSupportFragment.
+
+
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
-// Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        // Specify the types of place data to return.
+        assert autocompleteFragment != null;
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME))
+                .setCountry("za");
 
-// Set up a PlaceSelectionListener to handle the response.
+        // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
-            public void onPlaceSelected(Place place) {
+            public void onPlaceSelected(@NotNull Place place) {
                 // TODO: Get info about the selected place.
-               // destination = place.getName().toString();
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), DEFAULT_ZOOM));
             }
 
             @Override
-            public void onError(Status status) {
+            public void onError(@NotNull Status status) {
                 // TODO: Handle the error.
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
+
     }
     // [END maps_current_place_on_create]
 
@@ -147,7 +151,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
      */
     // [START maps_current_place_on_save_instance_state]
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
         if (map != null) {
             outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
             outState.putParcelable(KEY_LOCATION, lastKnownLocation);
@@ -158,7 +162,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     /**
      * Sets up the options menu.
-     *
      * @param menu The options menu.
      * @return Boolean.
      */
@@ -170,7 +173,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     /**
      * Handles a click on the menu option to get a place.
-     *
      * @param item The menu item to handle.
      * @return Boolean.
      */
@@ -209,7 +211,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             public View getInfoContents(Marker marker) {
                 // Inflate the layouts for the info window, title and snippet.
                 View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
-                        (FrameLayout) findViewById(R.id.currentPlaceMap), false);
+                        (FrameLayout) findViewById(R.id.map), false);
 
                 TextView title = infoWindow.findViewById(R.id.title);
                 title.setText(marker.getTitle());
@@ -227,10 +229,10 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         // [END_EXCLUDE]
 
         // Turn on the My Location layer and the related control on the map.
-        updateLocationUI();
+         updateLocationUI();
 
         // Get the current location of the device and set the position of the map.
-        getDeviceLocation();
+         getDeviceLocation();
     }
     // [END maps_current_place_on_map_ready]
 
@@ -267,7 +269,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                     }
                 });
             }
-        } catch (SecurityException e) {
+        } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
@@ -304,13 +306,10 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         locationPermissionGranted = false;
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationPermissionGranted = true;
-                }
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationPermissionGranted = true;
             }
         }
         updateLocationUI();
@@ -338,21 +337,17 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
             // Get the likely places - that is, the businesses and other points of interest that
             // are the best match for the device's current location.
-            @SuppressWarnings("MissingPermission") final Task<FindCurrentPlaceResponse> placeResult =
+            @SuppressWarnings("MissingPermission") final
+            Task<FindCurrentPlaceResponse> placeResult =
                     placesClient.findCurrentPlace(request);
-            placeResult.addOnCompleteListener(new OnCompleteListener<FindCurrentPlaceResponse>() {
+            placeResult.addOnCompleteListener (new OnCompleteListener<FindCurrentPlaceResponse>() {
                 @Override
                 public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
                     if (task.isSuccessful() && task.getResult() != null) {
                         FindCurrentPlaceResponse likelyPlaces = task.getResult();
 
                         // Set the count, handling cases where less than 5 entries are returned.
-                        int count;
-                        if (likelyPlaces.getPlaceLikelihoods().size() < M_MAX_ENTRIES) {
-                            count = likelyPlaces.getPlaceLikelihoods().size();
-                        } else {
-                            count = M_MAX_ENTRIES;
-                        }
+                        int count = Math.min(likelyPlaces.getPlaceLikelihoods().size(), M_MAX_ENTRIES);
 
                         int i = 0;
                         likelyPlaceNames = new String[count];
@@ -376,14 +371,14 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
                         // Show a dialog offering the user the list of likely places, and add a
                         // marker at the selected place.
-                        MapsActivityCurrentPlace.this.openPlacesDialog();
-                    } else {
+                        MapsActivity.this.openPlacesDialog();
+                    }
+                    else {
                         Log.e(TAG, "Exception: %s", task.getException());
                     }
                 }
             });
-        }
-        else {
+        } else {
             // The user has not granted permission.
             Log.i(TAG, "The user did not grant location permission.");
 
@@ -433,6 +428,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                 .setTitle(R.string.pick_place)
                 .setItems(likelyPlaceNames, listener)
                 .show();
+
     }
     // [END maps_current_place_open_places_dialog]
 
@@ -448,15 +444,27 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             if (locationPermissionGranted) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
-            }
-            else {
+            } else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
         }
     }
+
+    /*
+    private void moveCamera(LatLng latLng, float zoom, String title){
+        Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title(title);
+        map.addMarker(options);
+    }
+     */
+
 }

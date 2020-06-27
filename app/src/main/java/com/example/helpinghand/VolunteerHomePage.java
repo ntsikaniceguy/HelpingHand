@@ -1,26 +1,15 @@
 package com.example.helpinghand;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class VolunteerHomePage extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,9 +19,6 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
     String surname;
     String contact;
     String json;
-    //  private DrawerLayout drawer;
-    private CardView NewRequestCard, LocationUpdateCard, MessagesCard, PersonalDetailsCard, SettingsCard, LogoutCard;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,40 +29,20 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         JSONdata(json);
 
         //defining cards
-        NewRequestCard = findViewById(R.id.AcceptRequestCard);
-        LocationUpdateCard = findViewById(R.id.UpdateLocationCardVolunteer);
-        MessagesCard = findViewById(R.id.MessagesCardVolunteer);
-        PersonalDetailsCard = findViewById(R.id.PersonalDetailsCardVolunteer);
-        SettingsCard = findViewById(R.id.SettingsCardVolunteer);
-        LogoutCard = findViewById(R.id.LogoutCardVolunteer);
+        CardView NewRequestCard = findViewById(R.id.AcceptRequestCard);
+        CardView LocationUpdateCard = findViewById(R.id.UpdateLocationCardVolunteer);
+        CardView messagesCard = findViewById(R.id.MessagesCardVolunteer);
+        CardView PersonalDetailsCard = findViewById(R.id.PersonalDetailsCardVolunteer);
+        CardView SettingsCard = findViewById(R.id.SettingsCardVolunteer);
+        CardView LogoutCard = findViewById(R.id.LogoutCardVolunteer);
 
         //adding click listeners to the cards
         NewRequestCard.setOnClickListener(this);
         LocationUpdateCard.setOnClickListener(this);
-        MessagesCard.setOnClickListener(this);
+        messagesCard.setOnClickListener(this);
         PersonalDetailsCard.setOnClickListener(this);
         SettingsCard.setOnClickListener(this);
         LogoutCard.setOnClickListener(this);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-
-    /* unneeded
-        drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_draw_open, R.string.navigation_draw_close);
-
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
-     */
     }
 
     public void moveToMessageActivity(){
@@ -92,6 +58,28 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         startActivity(i);
     }
 
+    public void moveToPDVActivity(){
+        Intent intent = new Intent(this, PDActivity.class);
+        intent.putExtra("data",json);
+        startActivity(intent);
+    }
+
+    public void logoutActivity(){
+        Toast.makeText(this, "Goodbye!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveToSettingsActivity(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveToLocationActivity(){
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -99,8 +87,25 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
                 volunteerToRequestActivity();
                 break;
 
+            case R.id.UpdateLocationCardVolunteer:
+                moveToLocationActivity();
+                break;
+
             case R.id.MessagesCardVolunteer:
                 moveToMessageActivity();
+                break;
+
+            case R.id.PersonalDetailsCardVolunteer:
+                moveToPDVActivity();
+                break;
+
+            case R.id.SettingsCardVolunteer:
+                moveToSettingsActivity();
+                break;
+
+            case R.id.LogoutCardVolunteer:
+                logoutActivity();
+                break;
         }
     }
 
@@ -112,54 +117,6 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
             //disables back
         }
     }
-
-    /* unneeded
-    @Override
-      public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-                break;
-
-            case R.id.nav_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-                break;
-
-            case R.id.nav_requests:
-                volunteerToRequestActivity(item);
-                break;
-
-            case R.id.nav_messages:
-                moveToMessageActivity(item);
-                break;
-
-            case R.id.nav_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_help:
-                Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START))
-        {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
-     */
-
-
 
     void JSONdata(String data)
     {

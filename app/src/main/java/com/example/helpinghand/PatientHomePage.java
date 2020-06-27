@@ -67,18 +67,6 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         SettingsCard.setOnClickListener(this);
         LogoutCard.setOnClickListener(this);
 
-       /* probably won't use this
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
-                R.string.navigation_draw_open, R.string.navigation_draw_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        */
-
-
     }
 
     void patientHomeToRequest()
@@ -89,15 +77,37 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
     }
 
     void patientToMapsActivity(){
-        Intent i = new Intent(PatientHomePage.this, MapsActivityCurrentPlace.class);
+        Intent i = new Intent(PatientHomePage.this, MapsActivity.class);
         startActivity(i);
     }
+
+    public void moveToMessageActivity(){
+        Intent intent = new Intent(PatientHomePage.this, MessagingActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveToPDActivity(){
+        Intent intent = new Intent(PatientHomePage.this, PDActivity.class);
+        intent.putExtra("data",json);
+        startActivity(intent);
+    }
+
+    public void logoutActivity(){
+        Toast.makeText(this, "Goodbye!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void moveToSettingsActivity(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.NewRequestCard:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.grid_layout, new RequestsFragment());
                 patientHomeToRequest();
                 break;
 
@@ -109,63 +119,28 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
                 moveToMessageActivity();
                 break;
 
-        }
-    }
-
-
-
-    /* @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment());
+            case R.id.PersonalDetailsCard:
+                moveToPDActivity();
                 break;
 
-            case R.id.nav_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+            case R.id.LogoutCard:
+                logoutActivity();
                 break;
 
-            case R.id.nav_requests:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestsFragment()).commit();
-                break;
-
-            case R.id.nav_messages:
-                moveToMessageActivity();
-                break;
-
-            case R.id.nav_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_help:
-                Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
+            case R.id.SettingsCard:
+                moveToSettingsActivity();
                 break;
         }
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-    */
-
-
-
-
-    public void moveToMessageActivity(){
-        Intent intent = new Intent(PatientHomePage.this, MessagingActivity.class);
-        startActivity(intent);
     }
 
-    /*
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-        }
-        else{
+        if (false) {
             super.onBackPressed();
+        } else {
+            //disables back
         }
     }
-    */
 
     void JSONdata(String json)
     {
