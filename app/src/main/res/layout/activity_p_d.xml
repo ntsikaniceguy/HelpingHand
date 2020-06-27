@@ -102,6 +102,7 @@
                     android:id="@+id/personSurnameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Surname Text"
                     android:layout_marginTop="12dp"
                     android:textColor="#5C5C5C"
                     android:textSize="18sp" />
@@ -137,6 +138,7 @@
                     android:id="@+id/PhoneText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Phone number Test"
                     android:layout_marginTop="12dp"
                     android:textColor="#5C5C5C"
                     android:textSize="18sp" />
@@ -173,6 +175,7 @@
                     android:id="@+id/EmailText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Email Test"
                     android:layout_marginTop="12dp"
                     android:textColor="#5C5C5C"
                     android:textSize="18sp" />
@@ -210,6 +213,7 @@
                 android:id="@+id/PasswordText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Password Test"
                 android:layout_marginTop="12dp"
                 android:textColor="#5C5C5C"
                 android:textSize="18sp" />

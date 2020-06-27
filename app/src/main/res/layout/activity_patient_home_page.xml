@@ -36,8 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textDashboard"
-                android:textColor="@color/quantum_grey300"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
             <ImageView
                 android:layout_width="64dp"

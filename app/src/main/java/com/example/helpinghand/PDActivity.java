@@ -41,8 +41,8 @@ public class PDActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_d);
 
-        //json = getIntent().getStringExtra("JSON");
-        //JSONdata(json);
+        json = getIntent().getStringExtra("JSON")+"}";
+        JSONdata(json);
 
         //cards
         NameCard = findViewById(R.id.NameDetailCard);
@@ -51,12 +51,13 @@ public class PDActivity extends AppCompatActivity {
         EmailCard = findViewById(R.id.EmailCard);
         PasswordCard = findViewById(R.id.PasswordCard);
 
-        //textviews
+        //textViews
         TextView NameText = findViewById(R.id.personNameText);
         TextView SurnameText = findViewById(R.id.personSurnameText);
         TextView PhoneText = findViewById(R.id.PhoneText);
         TextView EmailText = findViewById(R.id.EmailText);
         TextView PasswordText = findViewById(R.id.PasswordText);
+
 
         editDetails(NameText);
         editDetails(SurnameText);
@@ -83,7 +84,6 @@ public class PDActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
 
     public void editDetails(View view){
