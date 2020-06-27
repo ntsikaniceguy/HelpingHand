@@ -52,6 +52,7 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         TextView WelcomeText = findViewById(R.id.nameView);
         WelcomeText.setText(welcomeMessage);
 
+
         //defining cards
         NewRequestCard = findViewById(R.id.NewRequestCard);
         LocationUpdateCard = findViewById(R.id.UpdateLocationCard);

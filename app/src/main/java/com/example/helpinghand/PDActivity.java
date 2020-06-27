@@ -24,6 +24,7 @@ public class PDActivity extends AppCompatActivity {
     String surname;
     String contact;
     String json;
+
     private TextView NameView;
 
     private CardView NameCard;
@@ -41,8 +42,20 @@ public class PDActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_d);
 
-        json = getIntent().getStringExtra("JSON")+"}";
+        json = getIntent().getStringExtra("data")+"}";
         JSONdata(json);
+
+        TextView volunteerName = findViewById(R.id.personNameText);
+        volunteerName.setText(name);
+
+        TextView VolunteerSurname = findViewById(R.id.personSurnameText);
+        VolunteerSurname.setText(surname);
+
+        TextView volunteerEmail = findViewById(R.id.EmailText);
+        volunteerEmail.setText(email);
+
+        TextView volunteerContact = findViewById(R.id.PhoneText);
+        volunteerContact.setText(contact);
 
         //cards
         NameCard = findViewById(R.id.NameDetailCard);
@@ -51,19 +64,14 @@ public class PDActivity extends AppCompatActivity {
         EmailCard = findViewById(R.id.EmailCard);
         PasswordCard = findViewById(R.id.PasswordCard);
 
-        //textViews
-        TextView NameText = findViewById(R.id.personNameText);
-        TextView SurnameText = findViewById(R.id.personSurnameText);
-        TextView PhoneText = findViewById(R.id.PhoneText);
-        TextView EmailText = findViewById(R.id.EmailText);
-        TextView PasswordText = findViewById(R.id.PasswordText);
 
-
+        /*
         editDetails(NameText);
         editDetails(SurnameText);
         editDetails(PhoneText);
         editDetails(EmailText);
         editDetails(PasswordText);
+         */
     }
 
     void JSONdata(String json)
