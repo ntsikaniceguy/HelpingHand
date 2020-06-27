@@ -67,18 +67,6 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         SettingsCard.setOnClickListener(this);
         LogoutCard.setOnClickListener(this);
 
-       /* probably won't use this
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
-                R.string.navigation_draw_open, R.string.navigation_draw_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        */
-
-
     }
 
     void patientHomeToRequest()
