@@ -51,6 +51,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
     }
 
     public void volunteerToRequestActivity() {
+        JSONdata(json);
         Intent i = new Intent(VolunteerHomePage.this,TestingVolunteer.class);
         i.putExtra("email",email);
         i.putExtra("ID",ID);
@@ -119,6 +120,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
 
     void JSONdata(String data)
     {
+        data = data + "}";
         try
         {
             JSONObject item = new JSONObject(data);

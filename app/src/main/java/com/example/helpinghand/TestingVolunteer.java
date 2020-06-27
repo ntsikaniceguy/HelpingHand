@@ -55,7 +55,6 @@ public class TestingVolunteer extends AppCompatActivity {
         orderbox = (ListView)findViewById(R.id.orderBox);
         json = getIntent().getStringExtra("userdata");
         getItems();
-        getUserInfo();
 
         orderbox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -74,12 +73,6 @@ public class TestingVolunteer extends AppCompatActivity {
         });
     }
 
-    public void getUserInfo()
-    {
-        userID = getIntent().getStringExtra("email");
-        userEmail  = getIntent().getStringExtra("ID");
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void moveToNext(JSONObject data)
     {
@@ -89,6 +82,7 @@ public class TestingVolunteer extends AppCompatActivity {
         if(success1 == true && success2==true)
         {
             //move to next xml
+            Toast.makeText(TestingVolunteer.this,"works",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -106,6 +100,7 @@ public class TestingVolunteer extends AppCompatActivity {
             urlBuilder.addQueryParameter("volEmail",userEmail);
             urlBuilder.addQueryParameter("volID",userID);
             urlBuilder.addQueryParameter("patEmail",clientEmail);
+            urlBuilder.addQueryParameter("date",date);
             String queryurl = urlBuilder.build().toString();
             Request request = new Request.Builder().url(queryurl).build();
 

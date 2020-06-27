@@ -65,7 +65,10 @@ public class TestingPatient extends AppCompatActivity {
 
     void moveToViewOrder()
     {
-        Toast.makeText(TestingPatient.this,"Works",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(TestingPatient.this,PatientProcessOrder.class);
+        i.putExtra("ID",ID);
+        i.putExtra("email",email);
+        startActivity(i);
     }
 
     public void PRAdd(View view)
