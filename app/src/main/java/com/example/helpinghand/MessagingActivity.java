@@ -53,8 +53,10 @@ public class MessagingActivity extends AppCompatActivity {
 
     void getID()
     {
-
         //sets variables to needed values
+        userID = getIntent().getStringExtra("userID");
+        clientID = getIntent().getStringExtra("clientID");
+        type = getIntent().getStringExtra("type");
     }
 
 

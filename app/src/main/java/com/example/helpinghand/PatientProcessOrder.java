@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -61,9 +62,20 @@ public class PatientProcessOrder extends AppCompatActivity implements View.OnCli
         switch (v.getId())
         {
             case R.id.MessagesCard:
-
+                MoveToMessage();
                 break;
         }
+    }
+
+    void MoveToMessage()
+    {
+        Intent i = new Intent(PatientProcessOrder.this,MessagingActivity.class);
+        i.putExtra("userID",id);
+        i.putExtra("userEmail",email);
+        i.putExtra("clientID",volID);
+        i.putExtra("clientEmail",volEmail);
+        i.putExtra("type","V");
+        startActivity(i);
     }
 
     void AcceptOrder(String data)
@@ -113,11 +125,16 @@ public class PatientProcessOrder extends AppCompatActivity implements View.OnCli
 
                     if(response.isSuccessful())
                     {
-                        String result = response.body().string();
+                        final String result = response.body().string();
 
                         if(!result.equalsIgnoreCase("no")&&!result.equalsIgnoreCase("error"))
                         {
-                            AcceptOrder(result);
+                           PatientProcessOrder.this.runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   AcceptOrder(result);
+                               }
+                           });
                         }
                     }
                 }
