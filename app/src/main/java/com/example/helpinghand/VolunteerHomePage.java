@@ -52,7 +52,8 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
 
     public void volunteerToRequestActivity() {
         Intent i = new Intent(VolunteerHomePage.this,TestingVolunteer.class);
-        i.putExtra("userdata",json);
+        i.putExtra("email",email);
+        i.putExtra("ID",ID);
         startActivity(i);
     }
 
