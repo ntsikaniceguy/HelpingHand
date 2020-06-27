@@ -3,6 +3,7 @@ package com.example.helpinghand;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +38,7 @@ public class TestingVolunteer extends AppCompatActivity {
     String userEmail;
     String json = "";
     ListView orderbox;
-    boolean success1;
+    boolean success1 = true;
     boolean success2;
     JSONArray ja;
     ArrayList<String> orders = new ArrayList<>();
@@ -81,8 +82,26 @@ public class TestingVolunteer extends AppCompatActivity {
 
         if(success1 == true && success2==true)
         {
-            //move to next xml
-            Toast.makeText(TestingVolunteer.this,"works",Toast.LENGTH_SHORT).show();
+            try
+            {
+                String clientEmail = data.getString("PATIENT_EMAIL");
+                String clientID = data.getString("PATIENT_ID");
+                String order = data.getString("ORDER_RECEIPT");
+
+                Intent i  = new Intent(TestingVolunteer.this,VolunteerAcceptOrder.class);
+                i.putExtra("userID",userID);
+                i.putExtra("userEmail",userEmail);
+                i.putExtra("clientID",clientID);
+                i.putExtra("clientEmail",clientEmail);
+                i.putExtra("order",order);
+                startActivity(i);
+
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -160,15 +179,7 @@ public class TestingVolunteer extends AppCompatActivity {
                     if(response.isSuccessful())
                     {
                         String result = response.body().string();
-
-                        if(result.equalsIgnoreCase("error"))
-                        {
-                            success1 = false;
-                        }
-                        else
-                        {
-                            success1 = true;
-                        }
+                        success1 = true;
                     }
                 }
             });

@@ -7,10 +7,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/accept_orders_volunteers"
+        android:text="Accept Orders"
+        android:id="@+id/AO"
         android:gravity="center"
-        android:textSize="28sp"
+        android:textSize="28dp"
         android:background="@drawable/gradient"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:padding="5dp"
         android:textColor="@color/white"/>
 
@@ -18,8 +21,8 @@
         android:id="@+id/patlist"
         android:layout_width="401dp"
         android:layout_height="698dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="33dp"
+        android:layout_below="@id/AO"
+        android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
         android:padding="10dp"
         android:textAlignment="center">
