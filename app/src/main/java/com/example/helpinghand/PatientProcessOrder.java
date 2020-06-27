@@ -74,7 +74,7 @@ public class PatientProcessOrder extends AppCompatActivity implements View.OnCli
         i.putExtra("userEmail",email);
         i.putExtra("clientID",volID);
         i.putExtra("clientEmail",volEmail);
-        i.putExtra("type","V");
+        i.putExtra("type","P");
         startActivity(i);
     }
 
