@@ -25,7 +25,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_home_page);
 
-        json = getIntent().getStringExtra("JSON");
+        json = getIntent().getStringExtra("JSON")+"}";
         JSONdata(json);
 
         //defining cards
