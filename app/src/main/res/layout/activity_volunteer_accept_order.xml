@@ -1,33 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Accept Orders"
+        android:gravity="center"
+        android:textSize="28dp"
+        android:background="@drawable/gradient"
+        android:padding="5dp"
+        android:textColor="@color/white"/>
 
     <ListView
         android:id="@+id/patlist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="401dp"
+        android:layout_height="698dp"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="33dp"
         android:gravity="center_horizontal"
-        android:textAlignment="center" />
+        android:padding="10dp"
+        android:textAlignment="center">
 
-    <Button
-        android:id="@+id/MessagesBtn"
-        android:layout_width="234dp"
-        android:layout_height="119dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:text="@string/volunteer_to_messages_button" />
+    </ListView>
 
-    <Button
-        android:id="@+id/DeliveryBtn"
-        android:layout_width="234dp"
-        android:layout_height="119dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/MessagesCard"
+        android:layout_width="207dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        app:cardCornerRadius="12dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        app:cardElevation="5dp">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/messages_image"
+            android:src="@drawable/ic_home_messages_icon" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/SendOrder"
+        android:layout_width="207dp"
+        android:layout_height="70dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="0dp"
-        android:text="@string/proceed_to_delivery" />
+        android:layout_alignParentBottom="true"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        app:cardCornerRadius="12dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        app:cardElevation="5dp">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/messages_image"
+            android:src="@drawable/ic_send_icon" />
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

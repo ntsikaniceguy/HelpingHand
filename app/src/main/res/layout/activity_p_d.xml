@@ -11,12 +11,14 @@
 
     <TextView
         android:text="@string/personal_details_header"
+        android:id="@+id/PersonalDetailsHeader"
         android:textColor="@color/white"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        />
 
     <TextView
         android:text="@string/tap_on_relevant_card_to_update_details"
@@ -61,6 +63,8 @@
 
                 <TextView
                     android:id="@+id/personNameText"
+                    android:text="Name Test"
+                    android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -106,7 +110,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/NewRequestCard"
+            android:id="@+id/PhoneNumberCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -130,6 +134,7 @@
                     android:src="@drawable/ic_phone_icon" />
 
                 <TextView
+                    android:id="@+id/PhoneText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -141,7 +146,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/PhoneNumberCard"
+            android:id="@+id/EmailCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -165,7 +170,7 @@
                     android:src="@drawable/ic_email_icon" />
 
                 <TextView
-                    android:id="@+id/EmailCard"
+                    android:id="@+id/EmailText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"

@@ -151,10 +151,18 @@ public class CreateAccount extends AppCompatActivity {
         });
     }
 
-    public void moveToPermission()
-    {
+    public void moveToPermission() {
         Intent volunteerIntent = new Intent(CreateAccount.this, PermissionActivity.class);
         startActivity(volunteerIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (false) {
+            super.onBackPressed();
+        } else {
+            //disables back
+        }
     }
 
 }
