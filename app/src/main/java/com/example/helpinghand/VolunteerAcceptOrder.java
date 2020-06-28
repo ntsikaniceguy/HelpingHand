@@ -44,7 +44,7 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.MessagesCard:
+            case R.id.AcceptOrderMessagesCard:
                 MoveToMessage();
                 break;
         }

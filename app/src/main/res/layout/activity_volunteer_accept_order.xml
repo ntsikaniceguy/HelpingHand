@@ -30,7 +30,7 @@
     </ListView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/MessagesCard"
+        android:id="@+id/AcceptOrderMessagesCard"
         android:layout_width="207dp"
         android:layout_height="70dp"
         android:layout_alignParentStart="true"

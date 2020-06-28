@@ -45,11 +45,13 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_home_page);
-        json = getIntent().getStringExtra("JSON");
+        json = getIntent().getStringExtra("JSON") + "}";
         JSONdata(json);
 
-        NameView = findViewById(R.id.nameView);
-        NameView.setText(name);
+        String welcomeMessage = "Welcome back, " + name;
+        TextView WelcomeText = findViewById(R.id.nameView);
+        WelcomeText.setText(welcomeMessage);
+
 
         //defining cards
         NewRequestCard = findViewById(R.id.NewRequestCard);

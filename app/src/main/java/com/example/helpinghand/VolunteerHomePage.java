@@ -3,6 +3,7 @@ package com.example.helpinghand;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import androidx.cardview.widget.CardView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class VolunteerHomePage extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +29,11 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
 
         json = getIntent().getStringExtra("JSON")+"}";
         JSONdata(json);
+
+        String welcomeMessage = "Welcome, " + name;
+        TextView textView = findViewById(R.id.nameViewVolunteer);
+        textView.setText(welcomeMessage);
+
 
         //defining cards
         CardView NewRequestCard = findViewById(R.id.AcceptRequestCard);

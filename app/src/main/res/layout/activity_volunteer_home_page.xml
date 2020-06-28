@@ -31,6 +31,14 @@
                 android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/personWelcomeMessage"
+                android:layout_below="@+id/textDashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/white"/>
+
+            <TextView
                 android:id="@+id/nameViewVolunteer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +52,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="17dp"
                 android:contentDescription="@string/personal_icon_home_page"
-                android:src="@drawable/ic_home_profile_medical_mask" />
+                android:src="@drawable/ic_volunteer_icon" />
         </RelativeLayout>
 
         <FrameLayout
