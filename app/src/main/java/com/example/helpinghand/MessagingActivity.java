@@ -31,7 +31,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     String userID;
     String clientID;
-    String type = "P";
+    String type ;
 
     int nextCheck = 10000;
 
@@ -45,7 +45,9 @@ public class MessagingActivity extends AppCompatActivity {
         ListView messagelist  = (ListView)findViewById(R.id.messageList);
         messagelist.setAdapter(adapter);
 
+        TextView name = (TextView)findViewById(R.id.edtNameMess);
         getID();
+        name.setText(getIntent().getStringExtra("clientEmail"));
         Timer timer = new Timer();
         Checkmessage msg = new Checkmessage();
         timer.schedule(msg,5000,nextCheck);
