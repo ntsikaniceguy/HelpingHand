@@ -102,7 +102,6 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         startActivity(intent);
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){

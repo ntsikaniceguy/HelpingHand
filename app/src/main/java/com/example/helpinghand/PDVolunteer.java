@@ -2,21 +2,17 @@ package com.example.helpinghand;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-public class PDActivity extends AppCompatActivity implements View.OnClickListener {
+public class PDVolunteer extends AppCompatActivity implements View.OnClickListener {
 
     int ID;
     String name;
@@ -24,7 +20,6 @@ public class PDActivity extends AppCompatActivity implements View.OnClickListene
     String surname;
     String contact;
     String json;
-
 
     private TextView Name;
     private TextView Surname;
@@ -38,17 +33,17 @@ public class PDActivity extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_p_d);
+        setContentView(R.layout.activity_p_d_volunteer);
 
         json = getIntent().getStringExtra("JSON")+"}";
-        PatientJSONdata(json);
+        VolunteerJSONdata(json);
 
         //initialise the textviews
-        Name = findViewById(R.id.personNameText);
-        Surname = findViewById(R.id.personSurnameText);
-        Email = findViewById(R.id.EmailText);
-        Phone = findViewById(R.id.PhoneText);
-        Password = findViewById(R.id.PasswordText);
+        Name = findViewById(R.id.VolunteerNameText);
+        Surname = findViewById(R.id.VolunteerSurnameText);
+        Email = findViewById(R.id.VolunteerEmailText);
+        Phone = findViewById(R.id.VolunteerPhoneText);
+        Password = findViewById(R.id.VolunteerPasswordText);
 
         //adding onclicks to the textviews:
         Name.setOnClickListener(this);
@@ -62,20 +57,19 @@ public class PDActivity extends AppCompatActivity implements View.OnClickListene
         Surname.setText(surname);
         Email.setText(email);
         Phone.setText(contact);
-
     }
 
-    void PatientJSONdata(String json)
+    void VolunteerJSONdata(String json)
     {
         try
         {
             JSONObject item = new JSONObject(json);
 
-            ID = item.getInt("PATIENT_ID");
-            name = item.getString("PATIENT_NAME");
-            email = item.getString("PATIENT_EMAIL");
-            surname = item.getString("PATIENT_SURNAME");
-            contact = item.getString("PATIENT_CONTACT");
+            ID = item.getInt("VOLUNTEER_ID");
+            name = item.getString("VOLUNTEER_NAME");
+            email = item.getString("VOLUNTEER_EMAIL");
+            surname = item.getString("VOLUNTEER_SURNAME");
+            contact = item.getString("VOLUNTEER_CONTACT");
         }
         catch (JSONException e)
         {
@@ -84,7 +78,7 @@ public class PDActivity extends AppCompatActivity implements View.OnClickListene
     }
 
     public void editDetails(View view){
-        TextView textView = new TextView(this);
+        TextView textView;
         textView = findViewById(view.getId());
         dialog = new AlertDialog.Builder(this).create();
         editText = new EditText(this);
@@ -108,6 +102,7 @@ public class PDActivity extends AppCompatActivity implements View.OnClickListene
             }
         });
     }
+
 
     @Override
     public void onClick(View view) {
