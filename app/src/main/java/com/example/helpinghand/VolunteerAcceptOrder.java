@@ -37,7 +37,8 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
         itemlist = (ListView)findViewById(R.id.patlist);
         addToList(data);
 
-        MessagesCard = findViewById(R.id.MessagesCard);
+        MessagesCard = findViewById(R.id.AcceptOrderMessagesCard);
+        MessagesCard.setOnClickListener(this);
     }
 
     @Override

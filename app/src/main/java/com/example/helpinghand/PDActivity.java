@@ -16,7 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
-public class PDActivity extends AppCompatActivity {
+public class PDActivity extends AppCompatActivity implements View.OnClickListener {
 
     int ID;
     String name;
@@ -33,7 +33,12 @@ public class PDActivity extends AppCompatActivity {
     private CardView EmailCard;
     private CardView PasswordCard;
 
-    TextView textView;
+    private TextView Name;
+    private TextView Surname;
+    private TextView Email;
+    private TextView Phone;
+    private TextView Password;
+
     AlertDialog dialog;
     EditText editText;
 
@@ -42,20 +47,28 @@ public class PDActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_d);
 
+        //initialise the textviews
+        Name = findViewById(R.id.personNameText);
+        Surname = findViewById(R.id.personSurnameText);
+        Email = findViewById(R.id.EmailText);
+        Phone = findViewById(R.id.PhoneText);
+        Password = findViewById(R.id.PasswordText);
+
+        //adding onclicks to the textviews:
+        Name.setOnClickListener(this);
+        Surname.setOnClickListener(this);
+        Email.setOnClickListener(this);
+        Phone.setOnClickListener(this);
+        Password.setOnClickListener(this);
+
         json = getIntent().getStringExtra("JSON")+"}";
         JSONdata(json);
 
-        TextView volunteerName = findViewById(R.id.personNameText);
-        volunteerName.setText(name);
-
-        TextView VolunteerSurname = findViewById(R.id.personSurnameText);
-        VolunteerSurname.setText(surname);
-
-        TextView volunteerEmail = findViewById(R.id.EmailText);
-        volunteerEmail.setText(email);
-
-        TextView volunteerContact = findViewById(R.id.PhoneText);
-        volunteerContact.setText(contact);
+        //adding the person's details on each card
+        Name.setText(name);
+        Surname.setText(surname);
+        Email.setText(email);
+        Phone.setText(contact);
 
         //cards
         NameCard = findViewById(R.id.NameDetailCard);
@@ -78,8 +91,8 @@ public class PDActivity extends AppCompatActivity {
     {
         try
         {
-            JSONArray ja = new JSONArray(json);
-            JSONObject item = ja.getJSONObject(0);
+           // JSONArray ja = new JSONArray(json);
+            JSONObject item = new JSONObject(json);
 
             ID = item.getInt("PATIENT_ID");
             name = item.getString("PATIENT_NAME");
@@ -93,9 +106,8 @@ public class PDActivity extends AppCompatActivity {
         }
     }
 
-
     public void editDetails(View view){
-
+        TextView textView = new TextView(this);
         textView = findViewById(view.getId());
         dialog = new AlertDialog.Builder(this).create();
         editText = new EditText(this);
@@ -103,19 +115,46 @@ public class PDActivity extends AppCompatActivity {
         dialog.setTitle("Edit the text");
         dialog.setView(editText);
 
+        final TextView finalTextView = textView;
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE TEXT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                textView.setText(editText.getText());
+                finalTextView.setText(editText.getText());
             }
         });
+        final TextView finalTextView1 = textView;
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText(textView.getText());
+                editText.setText(finalTextView1.getText());
                 dialog.show();
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.personNameText:
+                editDetails(Name);
+                break;
+
+            case R.id.personSurnameText:
+                editDetails(Surname);
+                break;
+
+            case R.id.PhoneText:
+                editDetails(Phone);
+                break;
+
+            case R.id.EmailText:
+                editDetails(Email);
+                break;
+
+            case R.id.PasswordText:
+                editDetails(Password);
+                break;
+        }
     }
 
 }

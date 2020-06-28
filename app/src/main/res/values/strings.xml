@@ -109,6 +109,7 @@
     <string name="tap_on_relevant_card_to_update_details">Tap on relevant card to update details.</string>
     <string name="accept_orders_volunteers">Accept Orders</string>
     <string name="welcome_message_volunteer_home_page">Welcome</string>
+    <string name="PD_password">Password</string>
 
     <string-array name="pref_syncConnectionType_entries">
         <item>WiFi</item>

@@ -34,7 +34,6 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         TextView textView = findViewById(R.id.nameViewVolunteer);
         textView.setText(welcomeMessage);
 
-
         //defining cards
         CardView NewRequestCard = findViewById(R.id.AcceptRequestCard);
         CardView LocationUpdateCard = findViewById(R.id.UpdateLocationCardVolunteer);
@@ -73,7 +72,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
 
     public void logoutActivity(){
         Toast.makeText(this, "Goodbye!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -125,8 +124,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         }
     }
 
-    void JSONdata(String data)
-    {
+    void JSONdata(String data) {
         data = data + "}";
         try
         {

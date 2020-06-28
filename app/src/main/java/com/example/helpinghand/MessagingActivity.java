@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,12 +36,17 @@ public class MessagingActivity extends AppCompatActivity {
 
     int nextCheck = 10000;
 
+    TextView clientName;
+
     private MessageAdapter adapter = new MessageAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
+
+        clientName = findViewById(R.id.clientName);
+        clientName.setText(clientID);
 
         ListView messagelist  = (ListView)findViewById(R.id.messageList);
         messagelist.setAdapter(adapter);
@@ -58,7 +64,6 @@ public class MessagingActivity extends AppCompatActivity {
         clientID = getIntent().getStringExtra("clientID");
         type = getIntent().getStringExtra("type");
     }
-
 
     //checks for messages
     public class Checkmessage extends TimerTask
