@@ -42,7 +42,7 @@ public class PDActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_d);
 
-        json = getIntent().getStringExtra("data")+"}";
+        json = getIntent().getStringExtra("JSON")+"}";
         JSONdata(json);
 
         TextView volunteerName = findViewById(R.id.personNameText);

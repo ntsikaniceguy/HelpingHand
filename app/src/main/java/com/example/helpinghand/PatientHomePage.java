@@ -90,13 +90,13 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
 
     public void moveToPDActivity(){
         Intent intent = new Intent(PatientHomePage.this, PDActivity.class);
-        intent.putExtra("data",json);
+        intent.putExtra("JSON",json);
         startActivity(intent);
     }
 
     public void logoutActivity(){
         Toast.makeText(this, "Goodbye!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

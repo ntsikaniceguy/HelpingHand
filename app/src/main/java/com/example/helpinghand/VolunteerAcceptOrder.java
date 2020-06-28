@@ -47,6 +47,10 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
             case R.id.AcceptOrderMessagesCard:
                 MoveToMessage();
                 break;
+
+            case R.id.SendOrder:
+                getData();
+                break;
         }
     }
 
