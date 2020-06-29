@@ -26,7 +26,7 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
     JSONArray ja;
     ArrayList<String> items = new ArrayList<>();
 
-    private CardView MessagesCard ;
+    private CardView AcceptOrderMessagesCard ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,12 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_volunteer_accept_order);
 
         getData();
-        itemlist = (ListView)findViewById(R.id.patlist);
+        itemlist = (ListView) findViewById(R.id.patlist);
         addToList(data);
+
+        AcceptOrderMessagesCard = findViewById(R.id.AcceptOrderMessagesCard);
+        AcceptOrderMessagesCard.setOnClickListener(this);
+
 
         MessagesCard = findViewById(R.id.AcceptOrderMessagesCard);
         MessagesCard.setOnClickListener(this);

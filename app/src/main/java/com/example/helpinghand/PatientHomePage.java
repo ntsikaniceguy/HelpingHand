@@ -144,7 +144,6 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
     {
         try
         {
-            // JSONArray ja = new JSONArray(json);
             JSONObject item = new JSONObject(json);
 
             ID = item.getInt("PATIENT_ID");
