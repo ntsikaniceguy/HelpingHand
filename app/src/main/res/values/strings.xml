@@ -113,6 +113,7 @@
     <string name="send_message_btn">Send</string>
     <string name="name_of_contact">Name</string>
     <string name="type_a_message">Type a message</string>
+    <string name="your_order_is_being_processed">Your order is being processed.</string>
 
     <string-array name="pref_syncConnectionType_entries">
         <item>WiFi</item>

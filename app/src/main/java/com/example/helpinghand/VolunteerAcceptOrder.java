@@ -26,8 +26,6 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
     JSONArray ja;
     ArrayList<String> items = new ArrayList<>();
 
-    private CardView AcceptOrderMessagesCard ;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +35,11 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
         itemlist = (ListView) findViewById(R.id.patlist);
         addToList(data);
 
-        AcceptOrderMessagesCard = findViewById(R.id.AcceptOrderMessagesCard);
+        CardView AcceptOrderMessagesCard = findViewById(R.id.AcceptOrderMessagesCard);
+        CardView MoveToMapsCard = findViewById(R.id.SendOrder);
+
         AcceptOrderMessagesCard.setOnClickListener(this);
-
-
-        CardView MessagesCard = findViewById(R.id.AcceptOrderMessagesCard);
-        MessagesCard.setOnClickListener(this);
+        MoveToMapsCard.setOnClickListener(this);
     }
 
     @Override
@@ -54,7 +51,7 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.SendOrder:
-                getData();
+                moveToMaps();
                 break;
         }
     }
@@ -80,6 +77,10 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
         data = getIntent().getStringExtra("order");
     }
 
+    public void moveToMaps(){
+        startActivity(new Intent(this, MapsActivity.class));
+    }
+
     void addToList(String json)
     {
         try
@@ -103,6 +104,4 @@ public class VolunteerAcceptOrder extends AppCompatActivity implements View.OnCl
             e.printStackTrace();
         }
     }
-
-
 }
