@@ -102,7 +102,7 @@ public class CreateAccount extends AppCompatActivity {
         startActivity(loginIntent);
     }
 
-    public void Add(String type,String name,String surname,String email,String phone,String password)
+    public void Add(final String type, String name, String surname, String email, String phone, String password)
     {
         OkHttpClient client = new OkHttpClient();
         String url = "https://lamp.ms.wits.ac.za/home/s2241186/signup.php";
@@ -142,7 +142,12 @@ public class CreateAccount extends AppCompatActivity {
                             }
                             else
                             {
-                                moveToPermission();
+                                if(type == "V"){
+                                    moveToVolunteerHome();
+                                }
+                                else{
+                                    moveToPatientHome();
+                                }
                             }
                         }
                     });
@@ -151,18 +156,15 @@ public class CreateAccount extends AppCompatActivity {
         });
     }
 
-    public void moveToPermission() {
-        Intent volunteerIntent = new Intent(CreateAccount.this, PermissionActivity.class);
+    public void moveToVolunteerHome() {
+        Intent volunteerIntent = new Intent(CreateAccount.this, VolunteerHomePage.class);
         startActivity(volunteerIntent);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (false) {
-            super.onBackPressed();
-        } else {
-            //disables back
-        }
+    public void moveToPatientHome(){
+        Intent intent = new Intent(CreateAccount.this, PatientHomePage.class);
+        startActivity(intent);
     }
+
 
 }

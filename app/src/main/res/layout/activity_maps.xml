@@ -11,7 +11,8 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/activity_maps" />
 
 
     <RelativeLayout
@@ -28,17 +29,10 @@
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp" />
+                android:padding="16dp"
+                tools:layout="@layout/activity_maps" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/changeAddressBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:text="@string/set_location_button" />
-
 
 </FrameLayout>
 

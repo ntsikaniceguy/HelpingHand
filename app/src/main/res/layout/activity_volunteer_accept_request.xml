@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/AO"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/who_do_you_want_to_help_today"
-        android:textAlignment="center"
-        android:id="@+id/editTop"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:gravity="center_horizontal" />
+        android:layout_marginRight="0dp"
+        android:background="@drawable/gradient"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Who would you like to help today?"
+        android:textColor="@color/white"
+        android:textSize="22dp" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/orderBox"
+        android:layout_width="401dp"
+        android:layout_height="698dp"
+        android:layout_below="@id/AO"
+        android:layout_marginTop="1dp"
+        android:gravity="center_horizontal"
         android:padding="10dp"
-        android:layout_below="@id/editTop"
-        android:layout_alignParentBottom="true"/>
+        android:textAlignment="center">
+
+    </ListView>
 
 </RelativeLayout>

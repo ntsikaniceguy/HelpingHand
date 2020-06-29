@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".PDActivity"
+    tools:context=".PDVolunteer"
     android:background="@drawable/gradient">
 
     <LinearLayout
@@ -56,7 +56,7 @@
                     android:src="@drawable/ic_name_icon" />
 
                 <TextView
-                    android:id="@+id/personNameText"
+                    android:id="@+id/VolunteerNameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -92,7 +92,7 @@
                     android:src="@drawable/ic_name_icon" />
 
                 <TextView
-                    android:id="@+id/personSurnameText"
+                    android:id="@+id/VolunteerSurnameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -127,7 +127,7 @@
                     android:src="@drawable/ic_phone_icon" />
 
                 <TextView
-                    android:id="@+id/PhoneText"
+                    android:id="@+id/VolunteerPhoneText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -163,7 +163,7 @@
                     android:src="@drawable/ic_email_icon" />
 
                 <TextView
-                    android:id="@+id/EmailText"
+                    android:id="@+id/VolunteerEmailText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -198,7 +198,7 @@
                     android:src="@drawable/ic_password_icon" />
 
                 <TextView
-                    android:id="@+id/PasswordText"
+                    android:id="@+id/VolunteerPasswordText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/PD_password"

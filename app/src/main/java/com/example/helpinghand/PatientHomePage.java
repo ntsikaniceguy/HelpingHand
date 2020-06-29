@@ -52,7 +52,6 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         TextView WelcomeText = findViewById(R.id.nameView);
         WelcomeText.setText(welcomeMessage);
 
-
         //defining cards
         NewRequestCard = findViewById(R.id.NewRequestCard);
         LocationUpdateCard = findViewById(R.id.UpdateLocationCard);
@@ -68,11 +67,9 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         PersonalDetailsCard.setOnClickListener(this);
         SettingsCard.setOnClickListener(this);
         LogoutCard.setOnClickListener(this);
-
     }
 
-    void patientHomeToRequest()
-    {
+    void patientHomeToRequest() {
         Intent i = new Intent(PatientHomePage.this,TestingPatient.class);
         i.putExtra("data",json);
         startActivity(i);
@@ -90,13 +87,13 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
 
     public void moveToPDActivity(){
         Intent intent = new Intent(PatientHomePage.this, PDActivity.class);
-        intent.putExtra("data",json);
+        intent.putExtra("JSON",json);
         startActivity(intent);
     }
 
     public void logoutActivity(){
         Toast.makeText(this, "Goodbye!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -104,7 +101,6 @@ public class PatientHomePage extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
-
 
     @Override
     public void onClick(View view) {

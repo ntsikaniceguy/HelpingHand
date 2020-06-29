@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearFraLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layoutDirection="locale"
@@ -17,4 +17,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#ff7f7f7f" />
-</LinearFraLayout>
+</LinearLayout>

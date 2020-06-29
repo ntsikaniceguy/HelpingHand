@@ -53,42 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(volunteerHomePageIntent);
     }
 
-    public boolean RememberMe(){
-
-        boolean RememberUser = false;
-        CheckBox remember = findViewById(R.id.checkBoxId);
-
-        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "false");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember", "");
-        if(checkbox.equals("true")){
-            RememberUser = true;
-        }else if(checkbox.equals("false")){
-            RememberUser = false;
-        }
-        return RememberUser;
-    }
-
-
     public void btnLogin(View view)
     {
 
@@ -217,15 +181,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public void onBackPressed() {
-        if (false) {
-            super.onBackPressed();
-        } else {
-            //disables back
-        }
-    }
-
-
 }

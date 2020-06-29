@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 public class VolunteerHomePage extends AppCompatActivity implements View.OnClickListener {
 
-    String ID;
+    int ID;
     String name;
     String email;
     String surname;
@@ -26,14 +26,12 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_home_page);
-
         json = getIntent().getStringExtra("JSON")+"}";
         JSONdata(json);
 
         String welcomeMessage = "Welcome, " + name;
         TextView textView = findViewById(R.id.nameViewVolunteer);
         textView.setText(welcomeMessage);
-
 
         //defining cards
         CardView NewRequestCard = findViewById(R.id.AcceptRequestCard);
@@ -65,15 +63,16 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         startActivity(i);
     }
 
-    public void moveToPDVActivity(){
-        Intent intent = new Intent(this, PDActivity.class);
-        intent.putExtra("data",json);
+
+    public void moveToPDVolunteer(){
+        Intent intent = new Intent(this, PDVolunteer.class);
+        intent.putExtra("JSON",json);
         startActivity(intent);
     }
 
     public void logoutActivity(){
         Toast.makeText(this, "Goodbye!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -103,7 +102,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.PersonalDetailsCardVolunteer:
-                moveToPDVActivity();
+                moveToPDVolunteer();
                 break;
 
             case R.id.SettingsCardVolunteer:
@@ -125,24 +124,24 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         }
     }
 
-    void JSONdata(String data)
+    void JSONdata(String json)
     {
-        data = data + "}";
         try
         {
-            JSONObject item = new JSONObject(data);
+            JSONObject item = new JSONObject(json);
 
-            ID = item.getString("VOLUNTEER_ID");
+            ID = item.getInt("VOLUNTEER_ID");
             name = item.getString("VOLUNTEER_NAME");
             email = item.getString("VOLUNTEER_EMAIL");
             surname = item.getString("VOLUNTEER_SURNAME");
             contact = item.getString("VOLUNTEER_CONTACT");
-
         }
         catch (JSONException e)
         {
             e.printStackTrace();
         }
     }
+
+
 
 }
