@@ -54,9 +54,8 @@ public class MessagingActivity extends AppCompatActivity {
         ListView messagelist  = (ListView)findViewById(R.id.messageList);
         messagelist.setAdapter(adapter);
 
-        TextView name = (TextView)findViewById(R.id.edtNameMess);
         getID();
-        name.setText(getIntent().getStringExtra("clientEmail"));
+        clientName.setText(getIntent().getStringExtra("clientEmail"));
         Timer timer = new Timer();
         //Checkmessage msg = new Checkmessage();
         //timer.schedule(msg,5000,nextCheck);

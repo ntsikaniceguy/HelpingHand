@@ -9,23 +9,23 @@
    <TextView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:text="Send"
-       android:textSize="20dp"
+       android:text="@string/send_message_btn"
+       android:textSize="20sp"
        android:textColor="@color/colorPrimary"
        android:id="@+id/btnSend"
        android:layout_alignParentBottom="true"
-       android:layout_alignParentRight="true"
-       android:onClick="sendMessage"
+       android:layout_alignParentEnd="true"
+       android:onClick="onSend"
        android:layout_margin="8dp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Type a message"
+        android:hint="@string/type_a_message"
         android:id="@+id/messageBox"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/btnSend"
-        android:layout_toStartOf="@id/btnSend" />
+        android:layout_toStartOf="@id/btnSend"
+        android:inputType="text" />
 
     <ListView
         android:layout_width="match_parent"
@@ -34,18 +34,13 @@
         android:dividerHeight="0dp"
         android:divider="@null"
         android:layout_above="@id/messageBox"
-        android:layout_below="@id/edtNameMess"
         android:layout_below="@id/clientName"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="25dp"
-        android:background="@color/colorPrimary"
-        android:textColor="#F0FFFF"
-        android:id="@+id/edtNameMess"
-        android:textSize="28dp"
+        android:text="@string/name_of_contact"
+        android:textSize="25sp"
         android:padding="5dp"
         android:background="@drawable/gradient"
         android:textColor="@color/white"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_theme_background_colour"
+    android:background="@color/white"
     tools:context=".PatientProcessOrder">
 
     <TextView
@@ -12,8 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
-        android:paddingTop="10dp"
-        android:text="Your Order is being processed." />
+        android:paddingTop="30dp"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:text="@string/your_order_is_being_processed" />
 
     <androidx.cardview.widget.CardView
         android:layout_gravity="center"

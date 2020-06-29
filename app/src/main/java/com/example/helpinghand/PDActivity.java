@@ -84,7 +84,7 @@ public class PDActivity extends AppCompatActivity implements View.OnClickListene
     }
 
     public void editDetails(View view){
-        TextView textView = new TextView(this);
+        TextView textView;
         textView = findViewById(view.getId());
         dialog = new AlertDialog.Builder(this).create();
         editText = new EditText(this);
