@@ -1,7 +1,9 @@
 package com.example.helpinghand;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ public class MessagingActivity extends AppCompatActivity {
     String type ;
 
     int nextCheck = 10000;
-
+    final int SEND_SMS_PERMISSION_REQUEST_CODE = 1;
     private MessageAdapter adapter = new MessageAdapter();
 
     @Override
@@ -49,8 +51,8 @@ public class MessagingActivity extends AppCompatActivity {
         getID();
         name.setText(getIntent().getStringExtra("clientEmail"));
         Timer timer = new Timer();
-        Checkmessage msg = new Checkmessage();
-        timer.schedule(msg,5000,nextCheck);
+        //Checkmessage msg = new Checkmessage();
+        //timer.schedule(msg,5000,nextCheck);
     }
 
     void getID()
@@ -61,9 +63,39 @@ public class MessagingActivity extends AppCompatActivity {
         type = getIntent().getStringExtra("type");
     }
 
+    public boolean checkPermission(String permission)
+    {
+        int check = ContextCompat.checkSelfPermission(this,permission);
+        return (check == PackageManager.PERMISSION_GRANTED);
+    }
+
+    void onSend(View v)
+    {
+        final EditText msgBox = (EditText)findViewById(R.id.messageBox);
+        final String text = msgBox.getText().toString();
+
+        JSONObject item = new JSONObject();
+
+        try
+        {
+            msgBox.setText("");
+            item.put("msg",text);
+            item.put("user",true);
+            adapter.Additem(item);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        //adding number;
+
+
+    }
+
 
     //checks for messages
-    public class Checkmessage extends TimerTask
+/*    public class Checkmessage extends TimerTask
     {
         @Override
         public void run()
@@ -105,7 +137,7 @@ public class MessagingActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 
 
     void AddClientText(String text)
@@ -125,7 +157,7 @@ public class MessagingActivity extends AppCompatActivity {
         }
     }
 
-    public void sendMessage(View view)
+ /*   public void sendMessage(View view)
     {
         final EditText msgBox = (EditText)findViewById(R.id.messageBox);
         final String text = msgBox.getText().toString();
@@ -139,6 +171,7 @@ public class MessagingActivity extends AppCompatActivity {
             urlBuilder.addQueryParameter("UserID",userID);
             urlBuilder.addQueryParameter("ClientID",clientID);
             urlBuilder.addQueryParameter("Text",text);
+            urlBuilder.addQueryParameter("type",type);
 
             String queryurl = urlBuilder.build().toString();
             Request request = new Request.Builder().url(queryurl).build();
@@ -150,10 +183,12 @@ public class MessagingActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
 
                     if(response.isSuccessful())
                     {
+                        final String result = response.body().string();
+
                         MessagingActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run()
@@ -180,7 +215,7 @@ public class MessagingActivity extends AppCompatActivity {
             });
         }
 
-    }
+    }*/
 
 
     public class MessageAdapter extends BaseAdapter
