@@ -15,7 +15,7 @@
        android:id="@+id/btnSend"
        android:layout_alignParentBottom="true"
        android:layout_alignParentEnd="true"
-       android:onClick="onSend"
+       android:onClick="sendMessage"
        android:layout_margin="8dp"/>
 
     <EditText

@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -35,7 +36,7 @@ public class MessagingActivity extends AppCompatActivity {
     String userID;
     String clientID;
     String type ;
-
+    String contact;
     int nextCheck = 10000;
     final int SEND_SMS_PERMISSION_REQUEST_CODE = 1;
 
@@ -54,11 +55,13 @@ public class MessagingActivity extends AppCompatActivity {
         ListView messagelist  = (ListView)findViewById(R.id.messageList);
         messagelist.setAdapter(adapter);
 
+        TextView name = (TextView)findViewById(R.id.clientName);
         getID();
-        clientName.setText(getIntent().getStringExtra("clientEmail"));
+        clientDetails();
+        name.setText(getIntent().getStringExtra("clientEmail"));
         Timer timer = new Timer();
-        //Checkmessage msg = new Checkmessage();
-        //timer.schedule(msg,5000,nextCheck);
+        Checkmessage msg = new Checkmessage();
+        timer.schedule(msg,15000,nextCheck);
     }
 
     void getID()
@@ -69,39 +72,44 @@ public class MessagingActivity extends AppCompatActivity {
         type = getIntent().getStringExtra("type");
     }
 
-    public boolean checkPermission(String permission)
+
+    void clientDetails()
     {
-        int check = ContextCompat.checkSelfPermission(this,permission);
-        return (check == PackageManager.PERMISSION_GRANTED);
-    }
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://lamp.ms.wits.ac.za/home/s2241186/getClient.php";
+        HttpUrl.Builder urlbuilder = HttpUrl.parse(url).newBuilder();
 
-    void onSend(View v)
-    {
-        final EditText msgBox = (EditText)findViewById(R.id.messageBox);
-        final String text = msgBox.getText().toString();
+        urlbuilder.addQueryParameter("ID",clientID);
+        urlbuilder.addQueryParameter("type",type);
 
-        JSONObject item = new JSONObject();
+        String queryurl = urlbuilder.build().toString();
+        final Request request = new Request.Builder().url(queryurl).build();
 
-        try
-        {
-            msgBox.setText("");
-            item.put("msg",text);
-            item.put("user",true);
-            adapter.Additem(item);
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
 
-        //adding number;
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+            {
+                if(response.isSuccessful())
+                {
+                    final String result = response.body().string();
 
-
+                    if(!result.equalsIgnoreCase("e"))
+                    {
+                        contact = result;
+                    }
+                }
+            }
+        });
     }
 
 
     //checks for messages
-/*    public class Checkmessage extends TimerTask
+   public class Checkmessage extends TimerTask
     {
         @Override
         public void run()
@@ -130,7 +138,7 @@ public class MessagingActivity extends AppCompatActivity {
                     {
                         final String result = response.body().string();
 
-                        if(!result.equalsIgnoreCase(""))
+                        if(!result.equalsIgnoreCase("") || !result.equalsIgnoreCase(" "))
                         {
                             MessagingActivity.this.runOnUiThread(new Runnable() {
                                 @Override
@@ -143,7 +151,7 @@ public class MessagingActivity extends AppCompatActivity {
                 }
             });
         }
-    }*/
+    }
 
 
     void AddClientText(String text)
@@ -163,7 +171,7 @@ public class MessagingActivity extends AppCompatActivity {
         }
     }
 
- /*   public void sendMessage(View view)
+    public void sendMessage(View view)
     {
         final EditText msgBox = (EditText)findViewById(R.id.messageBox);
         final String text = msgBox.getText().toString();
@@ -176,7 +184,7 @@ public class MessagingActivity extends AppCompatActivity {
 
             urlBuilder.addQueryParameter("UserID",userID);
             urlBuilder.addQueryParameter("ClientID",clientID);
-            urlBuilder.addQueryParameter("Text",text);
+            urlBuilder.addQueryParameter("sent",text);
             urlBuilder.addQueryParameter("type",type);
 
             String queryurl = urlBuilder.build().toString();
@@ -221,7 +229,7 @@ public class MessagingActivity extends AppCompatActivity {
             });
         }
 
-    }*/
+    }
 
 
     public class MessageAdapter extends BaseAdapter
