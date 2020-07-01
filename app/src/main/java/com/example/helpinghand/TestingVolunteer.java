@@ -51,7 +51,7 @@ public class TestingVolunteer extends AppCompatActivity {
         setContentView(R.layout.activity_volunteer_accept_request);
 
         userEmail = getIntent().getStringExtra("email");
-        userID = getIntent().getStringExtra("ID");
+        userID = getIntent().getStringExtra("userID");
 
         orderbox = (ListView)findViewById(R.id.orderBox);
         json = getIntent().getStringExtra("userdata");
@@ -73,6 +73,8 @@ public class TestingVolunteer extends AppCompatActivity {
             }
         });
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void moveToNext(JSONObject data)
@@ -164,6 +166,7 @@ public class TestingVolunteer extends AppCompatActivity {
             HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
             urlBuilder.addQueryParameter("volID",userID);
             urlBuilder.addQueryParameter("patID",clientID);
+            urlBuilder.addQueryParameter("vtext"," ");
             String queryurl = urlBuilder.build().toString();
             Request request = new Request.Builder().url(queryurl).build();
 

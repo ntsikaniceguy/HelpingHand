@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 public class VolunteerHomePage extends AppCompatActivity implements View.OnClickListener {
 
-    int ID;
+    String ID;
     String name;
     String email;
     String surname;
@@ -56,10 +56,10 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
     }
 
     public void volunteerToRequestActivity() {
-        JSONdata(json);
+        //JSONdata(json);
         Intent i = new Intent(VolunteerHomePage.this,TestingVolunteer.class);
         i.putExtra("email",email);
-        i.putExtra("ID",ID);
+        i.putExtra("userID",ID);
         startActivity(i);
     }
 
@@ -130,7 +130,7 @@ public class VolunteerHomePage extends AppCompatActivity implements View.OnClick
         {
             JSONObject item = new JSONObject(json);
 
-            ID = item.getInt("VOLUNTEER_ID");
+            ID = item.getString("VOLUNTEER_ID");
             name = item.getString("VOLUNTEER_NAME");
             email = item.getString("VOLUNTEER_EMAIL");
             surname = item.getString("VOLUNTEER_SURNAME");
